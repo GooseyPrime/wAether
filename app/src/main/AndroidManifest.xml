@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" /> <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" /> <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- SCHEDULE_EXACT_ALARM might be needed if WorkManager uses exact alarms under the hood for certain constraints,
+         but generally WorkManager tries to avoid this. Add if build issues or runtime behavior indicates necessity. -->
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.DeviceDefault"
+        tools:targetApi="tiramisu">
+
+        <service
+            android:name=".service.WAetherWatchFaceService"
+            android:exported="true"
+            android:label="@string/watch_face_name"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/watch_face_config" /> <meta-data
+                android:name="com.google.android.wearable.watchface.preview"
+                android:resource="@drawable/watch_preview_square" /> <meta-data
+                android:name="com.google.android.wearable.watchface.preview_circular"
+                android:resource="@drawable/watch_preview_circular" /> <meta-data
+                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
+                android:value="com.wAether.CONFIG_ACTIVITY_ACTION" /> </service>
+
+        <!--
+             MainActivity:
+             Its role in a watch-face centric app can be:
+             1. Initial permission requests if needed before the watch face is active.
+             2. A configuration screen for the watch face (though not explicitly in spec yet).
+             3. A simple launcher entry that might not do much if the watch face is the primary UI.
+             For now, let's assume it's a simple launcher.
+        -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name_activity"> <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!--
+            <intent-filter>
+                <action android:name="com.wAether.CONFIG_ACTIVITY_ACTION" />
+                <category android:name="com.google.android.wearable.watchface.category.WEARABLE_CONFIGURATION"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            -->
+        </activity>
+
+        <!--
+             MoodSelectorScreen could be an Activity if launched separately,
+             or a Composable within the watch face flow or MainActivity.
+             If it's a separate Activity, declare it here.
+             For now, assuming it's a Composable called from elsewhere.
+        -->
+        <!--
+        <activity android:name=".ui.mood.MoodActivity" android:exported="false" />
+        -->
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" /> </provider>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+    </application>
+
+</manifest>

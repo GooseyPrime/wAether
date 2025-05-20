@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wallpaper xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+        This file is referenced by the watch face service in AndroidManifest.xml.
+        It can be used to declare user styles for watch face customization.
+        For now, it can be minimal if no styles are defined yet.
+
+        Example of a style definition (you would define these in UserStyleSchema):
+        <style
+            id="color_style_setting"
+            displayName="@string/colors_style_setting"
+            icon="@drawable/ic_color_palette"
+            defaultValue="default_color_option">
+            <option
+                id="default_color_option"
+                displayName="@string/default_color_option_name"
+                icon="@drawable/ic_color_default" />
+            <option
+                id="red_color_option"
+                displayName="@string/red_color_option_name"
+                icon="@drawable/ic_color_red" />
+        </style>
+    -->
+</wallpaper>

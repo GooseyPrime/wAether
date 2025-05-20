@@ -1,0 +1,86 @@
+wAether/
+├── app/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   │   └── com/
+│   │   │   │       └── wAether/
+│   │   │   │           ├── MainActivity.kt
+│   │   │   │           │
+│   │   │   │           ├── data/
+│   │   │   │           │   ├── model/
+│   │   │   │           │   │   ├── LogEntry.kt (Updated)
+│   │   │   │           │   │   └── ApiResponseModels.kt (Updated)
+│   │   │   │           │   │
+│   │   │   │           │   ├── network/
+│   │   │   │           │   │   ├── ApiConstants.kt
+│   │   │   │           │   │   ├── OpenMeteoService.kt (Updated with OpenMeteoParameters)
+│   │   │   │           │   │   ├── NoaaSwpcService.kt
+│   │   │   │           │   │   └── RetrofitClient.kt
+│   │   │   │           │   │
+│   │   │   │           │   ├── local/
+│   │   │   │           │   │   ├── AppDatabase.kt
+│   │   │   │           │   │   └── LogEntryDao.kt
+│   │   │   │           │   │
+│   │   │   │           │   ├── firebase/
+│   │   │   │           │   │   └── FirebaseUploader.kt
+│   │   │   │           │   │
+│   │   │   │           │   └── repository/
+│   │   │   │           │       └── DataRepository.kt (To be updated to call new API params)
+│   │   │   │           │
+│   │   │   │           ├── di/
+│   │   │   │           │   ├── AppModule.kt
+│   │   │   │           │   └── NetworkModule.kt
+│   │   │   │           │
+│   │   │   │           ├── sensor/
+│   │   │   │           │   ├── LocationProvider.kt
+│   │   │   │           │   └── MagnetometerReader.kt
+│   │   │   │           │   └── DeviceInfoProvider.kt
+│   │   │   │           │
+│   │   │   │           ├── service/
+│   │   │   │           │   └── WAetherWatchFaceService.kt
+│   │   │   │           │
+│   │   │   │           ├── ui/
+│   │   │   │           │   ├── mood/
+│   │   │   │           │   │   ├── MoodSelectorScreen.kt
+│   │   │   │           │   │   └── MoodViewModel.kt
+│   │   │   │           │   │
+│   │   │   │           │   ├── watchface/
+│   │   │   │           │   │   ├── WatchFaceRenderer.kt (To be updated to include WeatherDisplay)
+│   │   │   │           │   │   ├── WatchFaceViewModel.kt (To be updated to provide weather data)
+│   │   │   │           │   │   └── composables/
+│   │   │   │           │   │       ├── TimeDisplay.kt
+│   │   │   │           │   │       ├── MetricDisplay.kt
+│   │   │   │           │   │       ├── MoonPhaseDisplay.kt
+│   │   │   │           │   │       └── WeatherDisplay.kt (New conceptual composable)
+│   │   │   │           │   │
+│   │   │   │           │   └── theme/
+│   │   │   │           │       ├── Color.kt
+│   │   │   │           │       ├── Theme.kt
+│   │   │   │           │       └── Type.kt
+│   │   │   │           │
+│   │   │   │           ├── util/
+│   │   │   │           │   ├── Constants.kt
+│   │   │   │           │   ├── PermissionManager.kt
+│   │   │   │           │   ├── DateTimeUtil.kt
+│   │   │   │           │   ├── FlareCalculator.kt
+│   │   │   │           │   └── WeatherCodeUtil.kt (New)
+│   │   │   │           │
+│   │   │   │           └── workers/
+│   │   │   │               ├── SnapshotScheduler.kt
+│   │   │   │               ├── GlobalSnapshotWorker.kt
+│   │   │   │               └── MoodLogUploadWorker.kt
+│   │   │   │
+│   │   │   ├── res/
+│   │   │   │   └── ... (No changes here for this feature, unless adding weather icons)
+│   │   │   │
+│   │   │   └── AndroidManifest.xml
+│   │   │
+│   │   ├──androidTest/
+│   │   └──test/
+│   │
+│   ├── google-services.json
+│   ├── build.gradle.kts
+│   └── proguard-rules.pro
+│
+├── ... (rest of project structure)

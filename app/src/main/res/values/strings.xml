@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">wAether</string>
+    <string name="app_name_activity">wAether App</string> <string name="watch_face_name">wAether Face</string> <string name="mood_calm">Calm</string>
+    <string name="mood_anxious">Anxious</string>
+    <string name="mood_energized">Energized</string>
+    <!--
+    <string name="colors_style_setting">Color Theme</string>
+    <string name="default_color_option_name">Default</string>
+    <string name="red_color_option_name">Red Accent</string>
+    -->
+
+    <string name="loading_data">Loading data…</string>
+    <string name="error_fetching_data">Error: Could not fetch data.</string>
+    <string name="permissions_required_title">Permissions Required</string>
+    <string name="permissions_required_message">wAether requires certain permissions to function correctly. Please grant them in settings.</string>
+    <string name="grant_permissions_button">Grant Permissions</string>
+
+</resources>
