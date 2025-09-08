@@ -1,3 +1,4 @@
+
 # wAether Environment Variables Guide
 
 This document describes all environment variables used by the wAether Android Wear OS application and provides guidance for configuration in different environments.
