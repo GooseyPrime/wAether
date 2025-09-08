@@ -1,105 +1,164 @@
-# Environment Configuration Guide
 
-This document explains how to configure environment variables for the wAether application.
+# wAether Environment Variables Guide
 
-## Setup Instructions
+This document describes all environment variables used by the wAether Android Wear OS application and provides guidance for configuration in different environments.
 
-1. **Copy the template file:**
+## Quick Start
+
+1. Copy the template file:
    ```bash
    cp .env.template .env
    ```
 
-2. **Configure Firebase:**
-   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
-   - Download `google-services.json` and place it in the `app/` directory
-   - Enable Firestore Database in your Firebase project
+2. Edit `.env` with your actual configuration values
+3. Ensure `.env` is in your `.gitignore` (it should be already)
 
-3. **Review API Settings:**
-   - OpenMeteo and NOAA APIs don't require keys
-   - Default URLs should work for most users
-   - Adjust timeout settings if needed for your network
-
-## Environment Variables
+## Environment Variables Reference
 
 ### Firebase Configuration
-- The app uses `google-services.json` for Firebase configuration
-- No additional environment variables needed for Firebase
 
-### API Configuration
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| `OPENMETEO_BASE_URL` | OpenMeteo weather API base URL | `https://api.open-meteo.com/v1/` |
-| `NOAA_SWPC_BASE_URL` | NOAA space weather API base URL | `https://services.swpc.noaa.gov/` |
+The wAether app uses Firebase Firestore for data persistence. These values are obtained from your Firebase Console.
 
-### Development Settings
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| `DEBUG_LOGGING_ENABLED` | Enable verbose logging | `true` |
-| `MOCK_SENSOR_DATA` | Use mock sensor data for testing | `false` |
+| Variable | Required | Description | Example |
+|----------|----------|-------------|---------|
+| `FIREBASE_PROJECT_ID` | Yes | Your Firebase project ID | `waether-app-prod` |
+| `FIREBASE_API_KEY` | Yes | Firebase Web API key | `AIzaSyC...` |
+| `FIREBASE_APP_ID` | Yes | Firebase App ID | `1:123456789:android:abc123` |
+| `FIREBASE_MESSAGING_SENDER_ID` | Yes | Firebase Cloud Messaging sender ID | `123456789` |
 
-### Network Configuration
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| `HTTP_TIMEOUT_SECONDS` | Network request timeout | `30` |
-| `RETRY_ATTEMPTS` | Number of retry attempts for failed requests | `3` |
+**Setup Instructions:**
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Create a new project or select existing
+3. Add an Android app to your project
+4. Download `google-services.json` and place in `app/` directory
+5. Copy configuration values to your `.env` file
 
-### Background Work Configuration
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| `GLOBAL_SNAPSHOT_INTERVAL_HOURS` | Interval for automatic data snapshots | `1` |
-| `MOOD_LOG_SYNC_INTERVAL_HOURS` | Interval for syncing mood logs | `6` |
+### External API Configuration
 
-### Wear OS Specific
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| `BATTERY_OPTIMIZATION_ENABLED` | Enable battery optimization features | `true` |
-| `REDUCE_ANIMATIONS` | Reduce animations for performance | `false` |
+#### OpenMeteo Weather API
 
-### Testing Configuration
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| `ENABLE_TEST_MODE` | Enable test mode features | `false` |
-| `MOCK_LOCATION_DATA` | Use mock location data | `false` |
+| Variable | Required | Description | Default |
+|----------|----------|-------------|---------|
+| `OPENMETEO_API_KEY` | No | API key for higher rate limits | Not required for basic usage |
 
-## Security Considerations
+- **Free Tier**: 10,000 requests/day, no key required
+- **Paid Tiers**: Higher limits available at [openmeteo.com](https://openmeteo.com/)
 
-- **Never commit `.env` files** to version control
-- Keep your `google-services.json` file secure
-- Use environment-specific configurations for different deployments
-- Regularly review and rotate any API keys (when applicable)
+#### NOAA Space Weather API
+
+| Variable | Required | Description | Default |
+|----------|----------|-------------|---------|
+| `NOAA_SWPC_BASE_URL` | No | Base URL for NOAA API | `https://services.swpc.noaa.gov` |
+
+- **Free**: No API key required
+- **Documentation**: [SWPC Products](https://www.swpc.noaa.gov/products)
+
+### Development Configuration
+
+| Variable | Description | Development | Production |
+|----------|-------------|-------------|------------|
+| `DEBUG_LOGGING` | Enable debug logs | `true` | `false` |
+| `LOG_LEVEL` | Logging level | `DEBUG` | `WARN` |
+| `NETWORK_LOGGING` | Log HTTP requests | `true` | `false` |
+| `ENVIRONMENT` | Environment name | `development` | `production` |
+
+### Performance and Monitoring
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `DATA_REFRESH_INTERVAL_MS` | How often to fetch data (ms) | `300000` (5 minutes) |
+| `GLOBAL_SNAPSHOT_INTERVAL_HOURS` | Background snapshot frequency | `6` |
+| `ENABLE_BACKGROUND_WORKERS` | Enable WorkManager workers | `true` |
+| `CRASH_REPORTING_ENABLED` | Enable crash reporting | `false` |
+| `PERFORMANCE_MONITORING_ENABLED` | Enable performance monitoring | `false` |
+
+## Environment-Specific Configurations
+
+### Development Environment
+
+```bash
+ENVIRONMENT=development
+DEBUG_LOGGING=true
+LOG_LEVEL=DEBUG
+NETWORK_LOGGING=true
+CRASH_REPORTING_ENABLED=false
+PERFORMANCE_MONITORING_ENABLED=false
+```
+
+### Staging Environment
+
+```bash
+ENVIRONMENT=staging
+DEBUG_LOGGING=true
+LOG_LEVEL=INFO
+NETWORK_LOGGING=false
+CRASH_REPORTING_ENABLED=true
+PERFORMANCE_MONITORING_ENABLED=true
+```
+
+### Production Environment
+
+```bash
+ENVIRONMENT=production
+DEBUG_LOGGING=false
+LOG_LEVEL=WARN
+NETWORK_LOGGING=false
+CRASH_REPORTING_ENABLED=true
+PERFORMANCE_MONITORING_ENABLED=true
+```
+
+## Security Best Practices
+
+1. **Never commit `.env` files** - They contain sensitive configuration
+2. **Use different Firebase projects** for dev/staging/production
+3. **Rotate API keys regularly** if using paid services
+4. **Monitor API usage** to detect unauthorized access
+5. **Use environment-specific configurations** to limit debug data in production
+
+## Validation
+
+To validate your environment configuration:
+
+1. **Build verification**:
+   ```bash
+   ./gradlew assembleDebug
+   ```
+
+2. **Firebase connection test**:
+   - Deploy to a test device
+   - Check logs for Firebase initialization success
+   - Verify data can be written to Firestore
+
+3. **API connectivity test**:
+   - Check network logs for successful API calls
+   - Verify weather and space weather data is being fetched
 
 ## Troubleshooting
 
-### Firebase Issues
-- Ensure `google-services.json` is in the correct location (`app/` directory)
-- Verify Firestore is enabled in your Firebase project
-- Check Firebase project permissions and authentication settings
+### Common Issues
 
-### API Issues
-- Verify internet connectivity on your Wear OS device
-- Check API URLs are accessible
-- Adjust timeout settings if experiencing network issues
+**Firebase connection fails:**
+- Verify `google-services.json` is in the correct location
+- Check Firebase project settings match your configuration
+- Ensure Firebase Authentication is properly configured
 
-### Build Issues
-- Ensure environment variables are properly formatted
-- Check for syntax errors in the `.env` file
-- Verify all required dependencies are installed
+**API calls failing:**
+- Check network connectivity
+- Verify API endpoints are accessible
+- Review rate limiting (especially for OpenMeteo)
 
-## Development vs Production
+**Performance issues:**
+- Adjust `DATA_REFRESH_INTERVAL_MS` for your use case
+- Monitor background worker frequency
+- Check device memory and CPU usage
 
-For different environments, you may want different configurations:
+## Environment File Security
 
-### Development
-```bash
-DEBUG_LOGGING_ENABLED=true
-MOCK_SENSOR_DATA=true
-ENABLE_TEST_MODE=true
-```
+- Store production environment files securely (encrypted)
+- Use secret management systems in CI/CD pipelines
+- Regularly audit access to environment configurations
+- Document who has access to production environment variables
 
-### Production
-```bash
-DEBUG_LOGGING_ENABLED=false
-MOCK_SENSOR_DATA=false
-ENABLE_TEST_MODE=false
-BATTERY_OPTIMIZATION_ENABLED=true
-```
+---
+
+**Last Updated**: 2025-09-08T13:00:00-04:00 / 2025-09-08T17:00:00Z — Initial environment configuration documentation

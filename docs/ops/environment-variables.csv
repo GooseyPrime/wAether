@@ -1,0 +1,21 @@
+# Environment Variables CSV Export
+# Generated on: 2025-09-08T13:45:00Z
+# Version: 1.0.0
+
+Variable Name,Type,Required,Default Value,Description,Environment
+FIREBASE_PROJECT_ID,string,yes,,Firebase project identifier,all
+FIREBASE_API_KEY,string,yes,,Firebase Web API key,all
+FIREBASE_APP_ID,string,yes,,Firebase application identifier,all
+FIREBASE_MESSAGING_SENDER_ID,string,yes,,Firebase Cloud Messaging sender ID,all
+OPENMETEO_API_KEY,string,no,,API key for OpenMeteo premium features,production
+NOAA_SWPC_BASE_URL,string,no,https://services.swpc.noaa.gov,Base URL for NOAA Space Weather API,all
+GOOGLE_SERVICES_ENABLED,boolean,no,true,Enable Google Play Services integration,all
+DEBUG_LOGGING,boolean,no,false,Enable debug level logging,development
+LOG_LEVEL,string,no,WARN,Application logging level (DEBUG/INFO/WARN/ERROR),all
+NETWORK_LOGGING,boolean,no,false,Enable HTTP request/response logging,development
+DATA_REFRESH_INTERVAL_MS,integer,no,300000,Data collection interval in milliseconds,all
+GLOBAL_SNAPSHOT_INTERVAL_HOURS,integer,no,6,Background snapshot collection interval in hours,all
+ENABLE_BACKGROUND_WORKERS,boolean,no,true,Enable WorkManager background processing,all
+ENVIRONMENT,string,no,development,Environment identifier (development/staging/production),all
+CRASH_REPORTING_ENABLED,boolean,no,false,Enable crash reporting and analytics,production
+PERFORMANCE_MONITORING_ENABLED,boolean,no,false,Enable Firebase Performance Monitoring,production
