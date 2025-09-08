@@ -15,7 +15,7 @@ fun WAetherTheme(
 
     MaterialTheme(
         colors = wearColorPalette,
-        typography = wearTypography,
+        // typography = wearTypography, // Temporarily disabled due to compatibility issues
         // Shapes are less customized on Wear OS due to the circular screen,
         // but you can define them if needed (e.g., for cards).
         // shapes = Shapes, // You would define a Shapes.kt file similar to Color.kt and Typography.kt

@@ -1,0 +1,57 @@
+package com.wAether.ui.watchface
+
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
+import android.util.Log
+import android.view.SurfaceHolder
+import androidx.wear.watchface.ComplicationSlotsManager
+import androidx.wear.watchface.RenderParameters
+import androidx.wear.watchface.Renderer
+import androidx.wear.watchface.WatchState
+import androidx.wear.watchface.style.CurrentUserStyleRepository
+import kotlinx.coroutines.CoroutineScope
+import java.io.PrintWriter
+import java.text.SimpleDateFormat
+import java.time.ZonedDateTime
+import java.util.Calendar
+import java.util.Locale
+
+private const val TAG = "WatchFaceRenderer"
+
+/**
+ * Minimal renderer implementation for wAether watch face
+ */
+class WatchFaceRenderer(
+    private val context: android.content.Context,
+    surfaceHolder: SurfaceHolder,
+    watchState: WatchState,
+    currentUserStyleRepository: CurrentUserStyleRepository,
+    canvasType: Int,
+    complicationSlotsManager: ComplicationSlotsManager,
+    private val watchFaceViewModel: WatchFaceViewModel,
+    private val scope: CoroutineScope
+) : Renderer(
+    surfaceHolder,
+    currentUserStyleRepository,
+    watchState,
+    canvasType,
+    interactiveDrawModeUpdateDelayMillis = 16L,
+    clearWithBackgroundTintBeforeRenderingHighlightLayer = false
+) {
+
+    private val textPaint = Paint().apply {
+        isAntiAlias = true
+        textSize = 48f
+        color = Color.WHITE
+        textAlign = Paint.Align.CENTER
+    }
+
+    private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+    override fun onDump(writer: PrintWriter) {
+        writer.println("WatchFaceRenderer for wAether")
+    }
+}

@@ -188,8 +188,17 @@ class DataRepository(
         return try {
             val response = noaaSwpcService.getGoesXrayFlux()
             if (response.isSuccessful && response.body() != null) {
-                val allFluxes = response.body()!!
-                val latestRelevantFlux = allFluxes
+                val rawData = response.body()!!
+                // Skip header row and parse data rows
+                val dataRows = rawData.drop(1)
+                val latestRelevantFlux = dataRows
+                    .map { row ->
+                        GoesXrayFluxEntry(
+                            timeTag = row.getOrNull(0),
+                            flux = row.getOrNull(1)?.toDoubleOrNull(),
+                            energyBand = row.getOrNull(2)
+                        )
+                    }
                     .filter { it.energyBand == "0.1-0.8nm" }
                     .maxByOrNull { it.timeTag ?: "" }
                 Result.success(latestRelevantFlux)
