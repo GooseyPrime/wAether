@@ -2,6 +2,7 @@ package com.wAether.service
 
 import android.util.Log
 import android.view.SurfaceHolder
+import androidx.wear.watchface.CanvasType
 import androidx.wear.watchface.ComplicationSlotsManager
 import androidx.wear.watchface.WatchFace
 import androidx.wear.watchface.WatchFaceService
@@ -48,7 +49,7 @@ class WAetherWatchFaceService : WatchFaceService() {
             surfaceHolder = surfaceHolder,
             currentUserStyleRepository = currentUserStyleRepository,
             watchState = watchState,
-            canvasType = WatchFace.CANVAS_TYPE_HARDWARE,
+            canvasType = CanvasType.HARDWARE,
             complicationSlotsManager = complicationSlotsManager,
             watchFaceViewModel = watchFaceViewModel!!, // Pass the ViewModel (non-null asserted as it's just created)
             scope = serviceScope // Pass the scope for coroutines in the renderer if it needs to launch its own

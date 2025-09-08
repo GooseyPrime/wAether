@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
+import androidx.wear.watchface.editor.EditorRequest // For creating editor requests
 import androidx.wear.watchface.editor.WatchFaceEditorContract // For launching watch face selection
 
 private const val TAG = "MainActivity"
@@ -96,12 +97,17 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun launchWatchFaceSelection() {
-        val watchFaceEditorIntent = WatchFaceEditorContract().createIntent(
-            this,
-            // The ComponentName of your WatchFaceService
-            ComponentName(packageName, "com.wAether.service.WAetherWatchFaceService")
-        )
         try {
+            // Create EditorRequest for the watch face editor
+            val editorRequest = EditorRequest(
+                ComponentName(packageName, "com.wAether.service.WAetherWatchFaceService"),
+                "",
+                null
+            )
+            val watchFaceEditorIntent = WatchFaceEditorContract().createIntent(
+                this,
+                editorRequest
+            )
             startActivity(watchFaceEditorIntent)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to launch watch face editor", e)

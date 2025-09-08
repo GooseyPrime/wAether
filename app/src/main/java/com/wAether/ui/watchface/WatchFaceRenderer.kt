@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.wear.watchface.ComplicationSlotsManager
-import androidx.wear.watchface.CompositingRenderer
+import androidx.wear.watchface.Renderer
 import androidx.wear.watchface.TapEvent
 import androidx.wear.watchface.WatchFace
 import androidx.wear.watchface.WatchState
@@ -45,12 +45,13 @@ class WatchFaceRenderer(
     complicationSlotsManager: ComplicationSlotsManager, // Keep for future complication use
     private val watchFaceViewModel: WatchFaceViewModel,
     private val scope: CoroutineScope // Passed from WatchFaceService
-) : CompositingRenderer(
+) : Renderer(
     surfaceHolder,
+    currentUserStyleRepository,
     watchState,
     canvasType,
-    complicationSlotsManager,
-    interactiveDrawModeUpdateDelayMillis = 16L // Aim for 60fps in interactive
+    interactiveDrawModeUpdateDelayMillis = 16L, // Aim for 60fps in interactive
+    clearWithBackgroundTintBeforeRenderingHighlightLayer = false
 ),
     WatchFace.TapListener {
 

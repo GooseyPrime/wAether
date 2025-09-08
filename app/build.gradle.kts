@@ -76,12 +76,20 @@ dependencies {
 
     // Jetpack Compose for Wear OS
     val wearComposeVersion = "1.3.1"
+    val composeVersion = "1.6.7"
     implementation("androidx.wear.compose:compose-material:$wearComposeVersion")
     implementation("androidx.wear.compose:compose-foundation:$wearComposeVersion")
     implementation("androidx.wear.compose:compose-navigation:$wearComposeVersion")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.6.7")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.7")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.6.7")
+    
+    // Standard Compose dependencies for icons and UI components
+    implementation("androidx.compose.material:material-icons-core:$composeVersion")
+    implementation("androidx.compose.material:material-icons-extended:$composeVersion")
+    implementation("androidx.compose.ui:ui:$composeVersion")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+    
+    // Compose tooling
+    debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
 
     // Wear OS Watch Face APIs
     val watchfaceVersion = "1.2.1"
