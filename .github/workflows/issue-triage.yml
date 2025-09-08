@@ -1,0 +1,75 @@
+name: Issue Triage Automation
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    
+    steps:
+      - name: Auto-label based on title
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const title = issue.title.toLowerCase();
+            const labels = [];
+            
+            // Add labels based on title prefix
+            if (title.includes('[bug]')) {
+              labels.push('bug');
+            } else if (title.includes('[feature]')) {
+              labels.push('enhancement');
+            } else if (title.includes('[docs]')) {
+              labels.push('documentation');
+            }
+            
+            // Add component labels based on title content
+            if (title.includes('watch face') || title.includes('watchface')) {
+              labels.push('component/watch-face');
+            } else if (title.includes('sensor') || title.includes('magnetometer') || title.includes('location')) {
+              labels.push('component/sensors');
+            } else if (title.includes('data') || title.includes('api') || title.includes('firebase')) {
+              labels.push('component/data');
+            } else if (title.includes('ui') || title.includes('interface')) {
+              labels.push('component/ui');
+            } else if (title.includes('build') || title.includes('gradle') || title.includes('ci')) {
+              labels.push('component/build');
+            }
+            
+            // Add platform labels
+            if (title.includes('wear os') || title.includes('wearos')) {
+              labels.push('platform/wear-os');
+            } else if (title.includes('android')) {
+              labels.push('platform/android');
+            }
+            
+            // Apply labels if any were determined
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: labels
+              });
+            }
+      
+      - name: Add to triage project
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Add comment welcoming new issues and linking to contribution guide
+            const issue = context.payload.issue;
+            
+            if (context.payload.action === 'opened') {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: "Thank you for opening this issue! 🙏\n\nA maintainer will review this issue and apply appropriate labels for triage. In the meantime, please make sure you've provided all the requested information in the issue template.\n\n📖 **New to contributing?** Check out our [Contributing Guide](https://github.com/" + context.repo.owner + "/" + context.repo.repo + "/blob/main/CONTRIBUTING.md) for more information about our development process and how you can help.\n\n🏷️ **Labels will be applied** during triage to help organize and prioritize this issue."
+              });
+            }

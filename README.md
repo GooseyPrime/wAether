@@ -1,68 +1,126 @@
 # wAether
 
-wAether is a Wear OS weather application that correlates atmospheric conditions, space weather, and personal mood data to provide insights into environmental impacts on well-being.
+A Wear OS application for tracking weather and space weather data with mood correlation analysis.
+
+## Overview
+
+wAether is a Wear OS smartwatch application that combines traditional weather data with space weather information (solar activity, magnetic field data, etc.) to help users understand potential correlations with their mood and well-being.
 
 ## Features
 
-- **Weather Monitoring** - Real-time local weather conditions
-- **Space Weather Tracking** - Solar flare and geomagnetic activity monitoring
-- **Mood Correlation** - Track mood patterns in relation to environmental conditions
-- **Wear OS Optimized** - Native watch face and complications
-- **Data Collection** - Anonymous aggregate data for research purposes
+- **Watch Face Integration**: Real-time weather and space weather display
+- **Multi-Source Data Collection**: 
+  - Local weather (OpenMeteo API)
+  - Space weather data (NOAA SWPC)
+  - Device sensors (magnetometer, location)
+  - User mood tracking
+- **Firebase Integration**: Secure data storage and analysis
+- **Background Monitoring**: Periodic automated data collection
 
+## Technology Stack
+
+- **Platform**: Android Wear OS
+- **Language**: Kotlin
+- **UI Framework**: Jetpack Compose for Wear OS
+- **Architecture**: MVVM with Repository pattern
+- **Data Sources**:
+  - OpenMeteo API (weather data)
+  - NOAA Space Weather Prediction Center API
+  - Android sensor framework
+- **Storage**: Firebase Firestore
+- **Build System**: Gradle with Kotlin DSL
+
+## Project Structure
+
+```
+wAether/
+├── app/
+│   ├── src/main/java/com/wAether/
+│   │   ├── data/          # Data layer (models, network, repository)
+│   │   ├── ui/            # UI layer (composables, viewmodels)
+│   │   ├── sensor/        # Sensor data providers
+│   │   ├── workers/       # Background tasks
+│   │   └── util/          # Utility classes
+│   └── build.gradle.kts
+├── build.gradle.kts
+└── settings.gradle.kts
+```
 ## Getting Started
 
 ### Prerequisites
 
-- Android Studio Arctic Fox or later
-- Wear OS emulator or physical Wear OS device
-- Android SDK 30 or higher
+- Android Studio Hedgehog (2023.1.1) or later
+- Wear OS SDK
+- Kotlin 1.9.23+
+- Android Gradle Plugin 8.10.0+
 
-### Building
+### Setup
 
-1. Clone the repository
-2. Open in Android Studio
-3. Sync Gradle dependencies
-4. Build and deploy to Wear OS device/emulator
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/GooseyPrime/wAether.git
+   cd wAether
+   ```
+
+2. Open the project in Android Studio
+
+3. Set up Firebase:
+   - Add your `google-services.json` file to the `app/` directory
+   - Configure Firebase Firestore in your project
+
+4. Build and run:
+   ```bash
+   ./gradlew build
+   ```
+
+### Testing on Wear OS
+
+- Use a physical Wear OS device or
+- Set up a Wear OS emulator in Android Studio
 
 ## Contributing
 
-We welcome contributions to wAether! Please read our contribution guidelines before getting started.
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
 
-### Reporting Issues
+- Issue templates and triage process
+- Code style and quality standards
+- Development workflow
+- Testing requirements
 
-- Use our [issue templates](.github/ISSUE_TEMPLATE/) for bug reports, feature requests, and documentation issues
-- Check existing issues before creating new ones
-- Provide detailed information following the template guidelines
+### Quick Start for Contributors
 
-### Issue Management
+1. Check our [Issues](https://github.com/GooseyPrime/wAether/issues) for `good-first-issue` labels
+2. Read the [Contributing Guide](CONTRIBUTING.md)
+3. Fork the repository and create a feature branch
+4. Submit a pull request with your changes
 
-Our issue tracking follows a structured approach:
-- **Bug Reports** - Use the bug report template with device and version information
-- **Feature Requests** - Use the feature request template with clear problem statements
-- **Documentation** - Use the documentation template for improvements
+## Issue Tracking
 
-For detailed information about our labeling and triage process, see [Issue Management](.github/ISSUE_MANAGEMENT.md).
+We use GitHub Issues with structured templates for:
 
-### Development Process
+- **Bug Reports**: Report crashes, incorrect behavior, or unexpected results
+- **Feature Requests**: Suggest new functionality or enhancements
+- **Documentation**: Improve or add to project documentation
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes following our coding standards
-4. Test thoroughly on Wear OS devices
-5. Submit a pull request using our template
+Please use the appropriate issue template and provide complete information to help us address your concerns quickly.
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the LICENSE file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
-## Privacy
+## Acknowledgments
 
-wAether respects user privacy. Personal data remains on device unless explicitly shared for research purposes with user consent.
+- Weather data provided by [Open-Meteo](https://open-meteo.com/)
+- Space weather data from [NOAA Space Weather Prediction Center](https://www.swpc.noaa.gov/)
+- Built with Android Jetpack and Wear OS technologies
 
 ## Support
 
-- 📖 [Documentation](https://github.com/GooseyPrime/wAether/wiki)
-- 💬 [Discussions](https://github.com/GooseyPrime/wAether/discussions)
-- 🐛 [Bug Reports](.github/ISSUE_TEMPLATE/bug_report.yml)
-- ✨ [Feature Requests](.github/ISSUE_TEMPLATE/feature_request.yml)
+- **Documentation**: Check this README and the [Contributing Guide](CONTRIBUTING.md)
+- **Questions**: Use [GitHub Discussions](https://github.com/GooseyPrime/wAether/discussions)
+- **Bug Reports**: Create an issue using our bug report template
+- **Feature Requests**: Create an issue using our feature request template
+
+---
+
+*Made with ❤️ for the Wear OS community*

@@ -1,103 +1,83 @@
 name: Feature Request
-description: Suggest a new feature or enhancement for wAether
-title: "[Feature]: "
+description: Suggest an idea or enhancement for wAether
+title: "[FEATURE] "
 labels: ["enhancement", "needs-triage"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for suggesting a new feature! Please provide the following information to help us understand your request.
-
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: Prerequisites
-      description: Please confirm the following before submitting
-      options:
-        - label: I have searched existing issues and this feature hasn't been requested
-          required: true
-        - label: This feature is related to wAether's core functionality (weather, space weather, mood tracking)
-          required: true
-
+        Thanks for taking the time to suggest a new feature for wAether!
+        
   - type: textarea
-    id: problem
+    id: problem-description
     attributes:
-      label: Problem Statement
-      description: What problem does this feature solve? Is your feature request related to a problem?
+      label: Is your feature request related to a problem?
+      description: A clear and concise description of what the problem is.
       placeholder: I'm always frustrated when...
     validations:
-      required: true
-
+      required: false
+      
   - type: textarea
-    id: solution
+    id: solution-description
     attributes:
-      label: Proposed Solution
-      description: Describe the solution you'd like to see implemented
+      label: Describe the solution you'd like
+      description: A clear and concise description of what you want to happen.
       placeholder: I would like to see...
     validations:
       required: true
-
-  - type: dropdown
-    id: category
+      
+  - type: textarea
+    id: alternatives-considered
     attributes:
-      label: Feature Category
-      description: Which area of wAether does this feature relate to?
+      label: Describe alternatives you've considered
+      description: A clear and concise description of any alternative solutions or features you've considered.
+      placeholder: I've considered...
+    validations:
+      required: false
+      
+  - type: dropdown
+    id: feature-category
+    attributes:
+      label: Feature category
+      description: What category does this feature fall into?
       options:
-        - Weather Display
-        - Space Weather Monitoring
-        - Mood Tracking
-        - Watch Face Design
-        - Data Collection
-        - User Interface
-        - Performance
+        - Watch face enhancement
+        - Data collection/sensors
+        - Weather/space weather display
+        - User interface/interaction
+        - Performance improvement
         - Accessibility
         - Other
     validations:
       required: true
-
+      
   - type: dropdown
     id: priority
     attributes:
-      label: Priority Level
+      label: Priority level
       description: How important is this feature to you?
       options:
-        - Low (Nice to have)
-        - Medium (Would improve experience)
-        - High (Significantly impacts usability)
-        - Critical (App is unusable without it)
+        - Nice to have
+        - Would be helpful
+        - Important
+        - Critical
     validations:
       required: true
-
-  - type: dropdown
-    id: complexity
-    attributes:
-      label: Estimated Complexity
-      description: How complex do you think this feature would be to implement?
-      options:
-        - Simple (UI change, configuration option)
-        - Moderate (New data source, algorithm update)
-        - Complex (Major architectural change)
-        - Unknown
-
-  - type: textarea
-    id: alternatives
-    attributes:
-      label: Alternatives Considered
-      description: Describe any alternative solutions or features you've considered
-      placeholder: A clear and concise description of any alternative solutions...
-
+      
   - type: textarea
     id: additional-context
     attributes:
-      label: Additional Context
-      description: Add any other context, mockups, or screenshots about the feature request here
-
+      label: Additional context
+      description: Add any other context, mockups, or screenshots about the feature request here.
+      placeholder: Any additional information, including mockups or examples
+    validations:
+      required: false
+      
   - type: checkboxes
-    id: implementation
+    id: terms
     attributes:
-      label: Implementation Willingness
-      description: Are you willing to help implement this feature?
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
       options:
-        - label: I'm willing to help with implementation
-        - label: I can provide testing and feedback
-        - label: I can help with documentation
+        - label: I agree to follow this project's Code of Conduct
+          required: true

@@ -1,114 +1,82 @@
 name: Documentation Issue
-description: Report issues with documentation or suggest documentation improvements
-title: "[Docs]: "
+description: Report an issue with documentation or suggest documentation improvements
+title: "[DOCS] "
 labels: ["documentation", "needs-triage"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping improve wAether's documentation! Please provide details about the documentation issue or improvement.
-
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: Prerequisites
-      description: Please confirm the following before submitting
-      options:
-        - label: I have searched existing issues and this documentation issue hasn't been reported
-          required: true
-
+        Thanks for helping us improve wAether's documentation!
+        
   - type: dropdown
-    id: doc-type
+    id: documentation-type
     attributes:
-      label: Documentation Type
-      description: What type of documentation needs attention?
+      label: Type of documentation issue
+      description: What type of documentation issue is this?
       options:
-        - README
-        - Code Comments
-        - API Documentation
-        - Setup/Installation Guide
-        - User Guide
-        - Developer Guide
-        - Architecture Documentation
-        - Other
+        - Missing documentation
+        - Incorrect/outdated information
+        - Unclear/confusing content
+        - Typo/grammar error
+        - Documentation improvement suggestion
+        - New documentation request
     validations:
       required: true
-
-  - type: dropdown
-    id: issue-type
-    attributes:
-      label: Issue Type
-      description: What kind of documentation issue is this?
-      options:
-        - Missing Information
-        - Incorrect Information
-        - Outdated Information
-        - Unclear/Confusing
-        - Typo/Grammar
-        - Formatting Issue
-        - New Documentation Needed
-        - Translation Issue
-    validations:
-      required: true
-
+      
   - type: input
-    id: location
+    id: affected-page
     attributes:
-      label: Location
-      description: Where is the documentation issue located? (file path, URL, section)
-      placeholder: e.g., README.md, docs/setup.md, line 45
+      label: Affected page/file
+      description: Which documentation page or file is affected?
+      placeholder: e.g., README.md, setup guide, API documentation
     validations:
-      required: true
-
-  - type: textarea
-    id: current-content
-    attributes:
-      label: Current Content
-      description: What does the current documentation say? (copy/paste the problematic section)
-      render: markdown
-
+      required: false
+      
   - type: textarea
     id: issue-description
     attributes:
-      label: Issue Description
-      description: Describe the problem with the current documentation
-      placeholder: The issue is...
+      label: Description of the issue
+      description: A clear and concise description of the documentation issue.
+      placeholder: What's wrong with the current documentation?
     validations:
       required: true
-
+      
   - type: textarea
     id: suggested-improvement
     attributes:
-      label: Suggested Improvement
-      description: How should the documentation be improved? Provide suggested text if possible
-      placeholder: The documentation should say...
+      label: Suggested improvement
+      description: How would you improve this documentation?
+      placeholder: What should the documentation say instead?
+    validations:
+      required: false
+      
+  - type: dropdown
+    id: user-type
+    attributes:
+      label: User type
+      description: What type of user would benefit from this documentation improvement?
+      options:
+        - End user/consumer
+        - Developer/contributor
+        - System administrator
+        - All users
     validations:
       required: true
-
-  - type: dropdown
-    id: audience
-    attributes:
-      label: Target Audience
-      description: Who is the primary audience for this documentation?
-      options:
-        - End Users
-        - Developers/Contributors
-        - System Administrators
-        - General Public
-        - Other
-
+      
   - type: textarea
     id: additional-context
     attributes:
-      label: Additional Context
-      description: Add any other context about the documentation issue (screenshots, related files, etc.)
-
+      label: Additional context
+      description: Add any other context about the documentation issue here.
+      placeholder: Any additional information that might help us improve the documentation
+    validations:
+      required: false
+      
   - type: checkboxes
-    id: help-offer
+    id: terms
     attributes:
-      label: Contribution Offer
-      description: Are you willing to help improve this documentation?
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
       options:
-        - label: I can help write/update the documentation
-        - label: I can review proposed changes
-        - label: I can provide subject matter expertise
+        - label: I agree to follow this project's Code of Conduct
+          required: true
