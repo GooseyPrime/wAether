@@ -19,10 +19,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +30,7 @@ import androidx.core.content.ContextCompat
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
+import androidx.wear.watchface.editor.EditorRequest // For creating editor requests
 import androidx.wear.watchface.editor.WatchFaceEditorContract // For launching watch face selection
 
 private const val TAG = "MainActivity"
@@ -98,12 +97,17 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun launchWatchFaceSelection() {
-        val watchFaceEditorIntent = WatchFaceEditorContract().createIntent(
-            this,
-            // The ComponentName of your WatchFaceService
-            ComponentName(packageName, "com.wAether.service.WAetherWatchFaceService")
-        )
         try {
+            // Create EditorRequest for the watch face editor
+            val editorRequest = EditorRequest(
+                ComponentName(packageName, "com.wAether.service.WAetherWatchFaceService"),
+                "",
+                null
+            )
+            val watchFaceEditorIntent = WatchFaceEditorContract().createIntent(
+                this,
+                editorRequest
+            )
             startActivity(watchFaceEditorIntent)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to launch watch face editor", e)
@@ -113,11 +117,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(
-    permissionsGranted: Boolean,
-    onRequestPermissions: () -> Unit,
-    onSelectWatchFace: () -> Unit
-) {
+fun MainScreen(permissionsGranted: Boolean, onRequestPermissions: () -> Unit, onSelectWatchFace: () -> Unit) {
     val context = LocalContext.current as Activity
 
     Column(
@@ -131,13 +131,19 @@ fun MainScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         if (permissionsGranted) {
-            Text("All set! Select the wAether face from your watch face picker.", textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            Text(
+                "All set! Select the wAether face from your watch face picker.",
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = onSelectWatchFace) {
                 Text("Choose Watch Face")
             }
         } else {
-            Text("wAether needs permissions for location and sensors to provide all features.", textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            Text(
+                "wAether needs permissions for location and sensors to provide all features.",
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = onRequestPermissions) {
                 Text("Grant Permissions")

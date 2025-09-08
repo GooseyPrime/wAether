@@ -38,7 +38,6 @@ val OnSurfaceDark = Color.White // Text/icons on dark surface
 val OnSurfaceVariantDark = Color(0xFFB8C8C9) // For less prominent text/icons on dark surface
 val OnErrorDark = Color.Black
 
-
 // Wear OS specific color palette using the Colors data class from androidx.wear.compose.material
 // Wear OS apps are typically dark themed.
 val wearColorPalette: Colors = Colors(
@@ -56,4 +55,3 @@ val wearColorPalette: Colors = Colors(
     onSurfaceVariant = OnSurfaceVariantDark // For less prominent text/icons
     // You can also define specific colors for Wear OS components if needed
 )
- 

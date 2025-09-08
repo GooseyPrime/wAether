@@ -1,7 +1,6 @@
 package com.wAether.data.repository
 
 import android.content.Context
-import android.os.Build
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -101,7 +100,11 @@ class DataRepository(
                     localFeelsLikeTemperature = openMeteoData?.current?.apparentTemperature,
                     localHumidity = openMeteoData?.current?.relativeHumidity2m,
                     localWeatherCode = openMeteoData?.current?.weatherCode,
-                    localWeatherCondition = openMeteoData?.current?.weatherCode?.let { WeatherCodeUtil.getWeatherDescription(it) },
+                    localWeatherCondition = openMeteoData?.current?.weatherCode?.let {
+                        WeatherCodeUtil.getWeatherDescription(
+                            it
+                        )
+                    },
                     localWindSpeed = openMeteoData?.current?.windSpeed10m,
                     localPrecipitation = openMeteoData?.current?.precipitation
                 )
@@ -136,7 +139,6 @@ class DataRepository(
         }
     }
 
-
     // --- Private helper functions for data fetching (as before) ---
     private suspend fun fetchOpenMeteoData(lat: Double, lon: Double): Result<OpenMeteoResponse> {
         return try {
@@ -161,7 +163,7 @@ class DataRepository(
     }
 
     private suspend fun fetchLatestKpIndex(): Result<Int?> {
-         return try {
+        return try {
             val response = noaaSwpcService.getPlanetaryKpIndex()
             if (response.isSuccessful && response.body() != null) {
                 val data = response.body()!!
@@ -186,8 +188,17 @@ class DataRepository(
         return try {
             val response = noaaSwpcService.getGoesXrayFlux()
             if (response.isSuccessful && response.body() != null) {
-                val allFluxes = response.body()!!
-                val latestRelevantFlux = allFluxes
+                val rawData = response.body()!!
+                // Skip header row and parse data rows
+                val dataRows = rawData.drop(1)
+                val latestRelevantFlux = dataRows
+                    .map { row ->
+                        GoesXrayFluxEntry(
+                            timeTag = row.getOrNull(0),
+                            flux = row.getOrNull(1)?.toDoubleOrNull(),
+                            energyBand = row.getOrNull(2)
+                        )
+                    }
                     .filter { it.energyBand == "0.1-0.8nm" }
                     .maxByOrNull { it.timeTag ?: "" }
                 Result.success(latestRelevantFlux)
@@ -272,9 +283,6 @@ data class LogEntryPartialData(
             kpIndex = this.kpIndex,
             irradiance = this.irradiance,
             xrayClass = this.xrayClass,
-            moonPhase = this.moonPhase,
-            solarWindSpeed = this.solarWindSpeed,
-            solarWindDensity = this.solarWindDensity,
             deviceModel = this.deviceModel,
             osVersion = this.osVersion,
             batteryLevel = this.batteryLevel,

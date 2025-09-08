@@ -54,7 +54,11 @@ class LocationProvider(private val context: Context) {
                     if (continuation.isActive) continuation.resume(Result.success(location))
                 } else {
                     Log.w(SENSOR_TAG, "FusedLocationProviderClient returned null location.")
-                    if (continuation.isActive) continuation.resume(Result.failure(Exception("Failed to get location: null returned.")))
+                    if (continuation.isActive) {
+                        continuation.resume(
+                            Result.failure(Exception("Failed to get location: null returned."))
+                        )
+                    }
                 }
             }.addOnFailureListener { exception ->
                 Log.e(SENSOR_TAG, "Failed to get location", exception)
@@ -91,7 +95,7 @@ class MagnetometerReader(private val context: Context) : SensorEventListener {
         // For a single value, we register, wait for one reading, then unregister.
         return suspendCancellableCoroutine { cont ->
             this.continuation = { result ->
-                 if (cont.isActive) {
+                if (cont.isActive) {
                     result.fold(
                         onSuccess = { cont.resume(it) },
                         onFailure = { cont.resumeWithException(it) }
@@ -114,9 +118,11 @@ class MagnetometerReader(private val context: Context) : SensorEventListener {
             val magneticFieldZ = event.values[2]
             // Calculate the magnitude of the magnetic field vector
             currentMagneticFieldStrength = Math.sqrt(
-                (magneticFieldX * magneticFieldX +
+                (
+                    magneticFieldX * magneticFieldX +
                         magneticFieldY * magneticFieldY +
-                        magneticFieldZ * magneticFieldZ).toDouble()
+                        magneticFieldZ * magneticFieldZ
+                    ).toDouble()
             )
             Log.d(SENSOR_TAG, "Magnetic field strength: $currentMagneticFieldStrength µT")
             continuation?.invoke(Result.success(currentMagneticFieldStrength))

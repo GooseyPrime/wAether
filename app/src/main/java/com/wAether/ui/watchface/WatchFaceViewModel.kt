@@ -1,9 +1,6 @@
 package com.wAether.ui.watchface
 
 import android.util.Log
-import androidx.lifecycle.ViewModel // Using androidx.lifecycle.ViewModel for potential future ViewModel-scoped DI
-import androidx.lifecycle.viewModelScope // Use viewModelScope if this were a standard Android ViewModel
-import com.wAether.data.model.LogEntry
 import com.wAether.data.repository.DataRepository
 import com.wAether.data.repository.LogEntryPartialData
 import kotlinx.coroutines.CoroutineScope
@@ -78,7 +75,6 @@ class WatchFaceViewModel(
     private var dataFetchJob: Job? = null
     private var clockJob: Job? = null
     private var latestPartialData: LogEntryPartialData? = null
-
 
     init {
         startDataUpdates()

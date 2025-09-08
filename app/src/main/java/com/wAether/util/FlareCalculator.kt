@@ -32,8 +32,11 @@ object FlareCalculator {
                 if (multiplier >= 10.0) { // X10 or higher becomes X + rounded number
                     String.format("X%.1f", multiplier).replace(".0", "") // X10, X11 etc.
                 } else { // M-class or X-class (X1 to X9.9)
-                    if (flux >= M_CLASS_THRESHOLD * 10) String.format("X%.1f", multiplier/10.0).replace(".0", "") // X Class
-                    else String.format("M%.1f", multiplier).replace(".0", "") // M Class
+                    if (flux >= M_CLASS_THRESHOLD * 10) {
+                        String.format("X%.1f", multiplier / 10.0).replace(".0", "") // X Class
+                    } else {
+                        String.format("M%.1f", multiplier).replace(".0", "") // M Class
+                    }
                 }
             }
             flux >= C_CLASS_THRESHOLD -> {
@@ -45,12 +48,12 @@ object FlareCalculator {
                 String.format("B%.1f", multiplier).replace(".0", "")
             }
             flux >= A_CLASS_THRESHOLD -> { // A-class (NOAA often reports A-class flux below B1.0 as just background or <A level)
-                 val multiplier = (flux / A_CLASS_THRESHOLD)
-                 // Typically, A-class flares are not numbered unless very significant.
-                 // For simplicity, we can just return "A" or "A-level".
-                 // Or, if you want to show a number: String.format("A%.1f", multiplier).replace(".0", "")
-                 // Let's be more specific for values close to B
-                 if (multiplier >= 1.0) String.format("A%.1f", multiplier).replace(".0","") else "<A1.0"
+                val multiplier = (flux / A_CLASS_THRESHOLD)
+                // Typically, A-class flares are not numbered unless very significant.
+                // For simplicity, we can just return "A" or "A-level".
+                // Or, if you want to show a number: String.format("A%.1f", multiplier).replace(".0", "")
+                // Let's be more specific for values close to B
+                if (multiplier >= 1.0) String.format("A%.1f", multiplier).replace(".0", "") else "<A1.0"
             }
             else -> "<A1.0" // Below A-class threshold
         }
