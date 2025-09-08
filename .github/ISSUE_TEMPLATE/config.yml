@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 General Discussion
+    url: https://github.com/GooseyPrime/wAether/discussions
+    about: Ask questions, share ideas, or discuss wAether with the community
+  - name: 📖 Documentation
+    url: https://github.com/GooseyPrime/wAether/wiki
+    about: Check the project documentation and wiki for setup guides and tutorials
+  - name: 🔒 Security Issue
+    url: https://github.com/GooseyPrime/wAether/security/advisories/new
+    about: Report security vulnerabilities privately

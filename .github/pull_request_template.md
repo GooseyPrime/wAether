@@ -1,39 +1,44 @@
 ## Description
-Brief description of the changes in this PR.
+Brief description of what this PR does.
 
 ## Type of Change
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Documentation update
-- [ ] Code refactoring
-- [ ] Performance improvement
-- [ ] Test coverage improvement
+- [ ] 🐛 Bug fix (non-breaking change which fixes an issue)
+- [ ] ✨ New feature (non-breaking change which adds functionality)
+- [ ] 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] 📝 Documentation update
+- [ ] 🔧 Maintenance (refactoring, dependencies, etc.)
 
 ## Related Issues
 Fixes #(issue number)
 
-## Changes Made
-- List of changes made
-- Another change
-- Yet another change
-
 ## Testing
-- [ ] Unit tests pass (`./gradlew test`)
-- [ ] Integration tests pass (`./gradlew connectedAndroidTest`)
-- [ ] Manual testing completed on Wear OS device/emulator
-- [ ] New tests added for new functionality
+- [ ] I have tested this change locally
+- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] New and existing unit tests pass locally with my changes
+- [ ] I have tested on a physical Wear OS device or appropriate emulator
 
-## Screenshots (if applicable)
-Add screenshots of UI changes or new features.
+## Screenshots/Videos
+<!-- If applicable, add screenshots or videos to help explain your changes -->
 
 ## Checklist
-- [ ] Code follows the project's coding standards
-- [ ] Self-review of code completed
-- [ ] Comments added for complex logic
-- [ ] Documentation updated (if needed)
-- [ ] No breaking changes (or breaking changes documented)
-- [ ] Tested on Wear OS device/emulator
+- [ ] My code follows the project's style guidelines
+- [ ] I have performed a self-review of my own code
+- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have checked that my changes don't introduce performance regressions
+
+## Device Testing
+- [ ] Galaxy Watch series
+- [ ] Pixel Watch
+- [ ] Other Wear OS devices (specify):
+- [ ] Android Emulator
+
+## Performance Impact
+- [ ] No performance impact
+- [ ] Minor performance improvement
+- [ ] Minor performance regression (justified)
+- [ ] Significant performance change (requires discussion)
 
 ## Additional Notes
-Any additional information or context about the PR.
+<!-- Add any additional notes, considerations, or context about this PR -->
