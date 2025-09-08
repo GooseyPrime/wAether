@@ -1,3 +1,4 @@
+
 # wAether ⌚
 
 [![CI/CD Pipeline](https://github.com/GooseyPrime/wAether/actions/workflows/ci.yml/badge.svg)](https://github.com/GooseyPrime/wAether/actions/workflows/ci.yml)
