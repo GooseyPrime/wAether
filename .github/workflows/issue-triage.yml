@@ -70,12 +70,6 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: issue.number,
-                body: `Thank you for opening this issue! 🙏
-
-A maintainer will review this issue and apply appropriate labels for triage. In the meantime, please make sure you've provided all the requested information in the issue template.
-
-📖 **New to contributing?** Check out our [Contributing Guide](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/CONTRIBUTING.md) for more information about our development process and how you can help.
-
-🏷️ **Labels will be applied** during triage to help organize and prioritize this issue.`
+                body: "Thank you for opening this issue! 🙏\n\nA maintainer will review this issue and apply appropriate labels for triage. In the meantime, please make sure you've provided all the requested information in the issue template.\n\n📖 **New to contributing?** Check out our [Contributing Guide](https://github.com/" + context.repo.owner + "/" + context.repo.repo + "/blob/main/CONTRIBUTING.md) for more information about our development process and how you can help.\n\n🏷️ **Labels will be applied** during triage to help organize and prioritize this issue."
               });
             }
