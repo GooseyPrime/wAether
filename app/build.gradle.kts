@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services") // Google services plugin for Firebase
-    id("com.google.devtools.ksp") version "1.9.23-1.0.19" // Or your current KSP version
+    id("com.google.devtools.ksp") version "1.9.10-1.0.13" // Or your current KSP version
 }
 
 android {
