@@ -1,3 +1,4 @@
+
 # wAether - Wear OS Weather and Space Weather App
 
 An advanced Wear OS application that provides comprehensive weather and space weather data, featuring atmospheric conditions, solar activity monitoring, and geomagnetic field measurements.
