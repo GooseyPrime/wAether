@@ -45,7 +45,6 @@ wAether/
 ├── build.gradle.kts
 └── settings.gradle.kts
 ```
-
 ## Getting Started
 
 ### Prerequisites
