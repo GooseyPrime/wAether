@@ -3,6 +3,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services") // Google services plugin for Firebase
     id("com.google.devtools.ksp") version "1.9.23-1.0.19" // Or your current KSP version
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0" // ktlint plugin for Kotlin linting
+    id("org.owasp.dependencycheck") // OWASP dependency check for security
+    id("com.github.ben-manes.versions") // Gradle versions plugin for dependency updates
 }
 
 android {
@@ -31,6 +34,7 @@ android {
         }
         debug {
             isMinifyEnabled = false
+            isTestCoverageEnabled = true // Enable test coverage for debug builds
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -125,4 +129,46 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.05.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+}
+
+// ktlint configuration
+ktlint {
+    android.set(true)
+    ignoreFailures.set(false)
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
+}
+
+// Dependency check configuration
+dependencyCheck {
+    format = "ALL"
+    suppressionFile = "dependency-check-suppressions.xml"
+    failBuildOnCVSS = 7.0f
+    analyzers {
+        assemblyEnabled = false
+        centralEnabled = true
+    }
+}
+
+// Versions plugin configuration for dependency updates
+tasks.named("dependencyUpdates").configure {
+    resolutionStrategy {
+        componentSelection {
+            all {
+                val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview")
+                    .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
+                    .any { it.matches(candidate.version) }
+                if (rejected) {
+                    reject("Release candidate")
+                }
+            }
+        }
+    }
 }

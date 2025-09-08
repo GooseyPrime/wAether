@@ -12,6 +12,9 @@ pluginManagement {
         id("org.jetbrains.kotlin.android") version "1.9.23"
         id("com.google.gms.google-services") version "4.4.1"
         id("com.google.devtools.ksp") version "1.9.23-1.0.19"
+        id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
+        id("org.owasp.dependencycheck") version "8.4.3"
+        id("com.github.ben-manes.versions") version "0.50.0"
     }
 }
 

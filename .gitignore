@@ -13,3 +13,21 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Test reports and coverage
+app/build/reports/
+app/build/test-results/
+app/build/outputs/
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+
+# Firebase config (if using)
+google-services.json
+
+# Keystore files (never commit these!)
+*.keystore
+*.jks
+release/
