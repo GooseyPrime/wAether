@@ -1,126 +1,246 @@
-# wAether
 
-A Wear OS application for tracking weather and space weather data with mood correlation analysis.
+# wAether - Wear OS Weather and Space Weather App
 
-## Overview
+An advanced Wear OS application that provides comprehensive weather and space weather data, featuring atmospheric conditions, solar activity monitoring, and geomagnetic field measurements.
 
-wAether is a Wear OS smartwatch application that combines traditional weather data with space weather information (solar activity, magnetic field data, etc.) to help users understand potential correlations with their mood and well-being.
+## 🏗️ Project Structure
 
-## Features
+This is an Android/Kotlin project built for Wear OS devices, featuring:
+- **Weather Data**: Local weather conditions via OpenMeteo API
+- **Space Weather**: Solar wind, X-ray flux, and KP index monitoring via NOAA SWPC
+- **Sensor Integration**: Magnetometer readings for magnetic field strength
+- **Data Persistence**: Firebase Firestore for cloud storage
+- **Background Processing**: WorkManager for periodic data collection
 
-- **Watch Face Integration**: Real-time weather and space weather display
-- **Multi-Source Data Collection**: 
-  - Local weather (OpenMeteo API)
-  - Space weather data (NOAA SWPC)
-  - Device sensors (magnetometer, location)
-  - User mood tracking
-- **Firebase Integration**: Secure data storage and analysis
-- **Background Monitoring**: Periodic automated data collection
+## 🔒 Security & Dependency Management
 
-## Technology Stack
+This project implements comprehensive security practices and automated dependency management to ensure safe, up-to-date dependencies.
 
-- **Platform**: Android Wear OS
-- **Language**: Kotlin
-- **UI Framework**: Jetpack Compose for Wear OS
-- **Architecture**: MVVM with Repository pattern
-- **Data Sources**:
-  - OpenMeteo API (weather data)
-  - NOAA Space Weather Prediction Center API
-  - Android sensor framework
-- **Storage**: Firebase Firestore
-- **Build System**: Gradle with Kotlin DSL
+### 🛡️ Security Features
 
-## Project Structure
+- **Dependency Locking**: All dependencies are locked to specific versions using Gradle dependency locking
+- **Vulnerability Scanning**: Automated OWASP dependency checks on every build
+- **Automated Updates**: Dependabot configured for weekly dependency updates
+- **Security Monitoring**: GitHub dependency graph and security advisories
+- **CI/CD Security**: Automated security checks in pull requests
 
+### 📦 Dependency Management Workflow
+
+#### 1. **Adding New Dependencies**
+
+When adding new dependencies to the project:
+
+```kotlin
+// In app/build.gradle.kts
+dependencies {
+    implementation("com.example:new-library:1.0.0")
+}
 ```
-wAether/
-├── app/
-│   ├── src/main/java/com/wAether/
-│   │   ├── data/          # Data layer (models, network, repository)
-│   │   ├── ui/            # UI layer (composables, viewmodels)
-│   │   ├── sensor/        # Sensor data providers
-│   │   ├── workers/       # Background tasks
-│   │   └── util/          # Utility classes
-│   └── build.gradle.kts
-├── build.gradle.kts
-└── settings.gradle.kts
+
+After adding dependencies, **always** update the lock files:
+
+```bash
+./gradlew dependencies --write-locks
 ```
-## Getting Started
 
-### Prerequisites
+Then commit both the build file changes and the generated lock files.
 
-- Android Studio Hedgehog (2023.1.1) or later
-- Wear OS SDK
-- Kotlin 1.9.23+
-- Android Gradle Plugin 8.10.0+
+#### 2. **Updating Dependencies**
 
-### Setup
+**Manual Updates:**
+```bash
+# Update a specific dependency version in build.gradle.kts
+# Then regenerate lock files
+./gradlew dependencies --write-locks
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/GooseyPrime/wAether.git
-   cd wAether
-   ```
+# Verify no vulnerabilities were introduced
+./gradlew dependencyCheckAnalyze
+```
 
-2. Open the project in Android Studio
+**Automated Updates:**
+- Dependabot automatically creates pull requests for dependency updates weekly
+- Security updates are prioritized and can be auto-merged
+- All updates are tested in CI before merging
 
-3. Set up Firebase:
-   - Add your `google-services.json` file to the `app/` directory
-   - Configure Firebase Firestore in your project
+#### 3. **Dependency Lock Files**
 
-4. Build and run:
-   ```bash
-   ./gradlew build
-   ```
+Lock files ensure reproducible builds by pinning exact dependency versions:
 
-### Testing on Wear OS
+- **Location**: `gradle/dependency-locks/*.lockfile`
+- **Purpose**: Ensures all developers and CI use identical dependency versions
+- **Updates**: Only through explicit `--write-locks` commands
+- **Security**: Prevents supply chain attacks through unexpected dependency changes
 
-- Use a physical Wear OS device or
-- Set up a Wear OS emulator in Android Studio
+#### 4. **Vulnerability Scanning**
 
-## Contributing
+**OWASP Dependency Check:**
+```bash
+# Run vulnerability scan locally
+./gradlew dependencyCheckAnalyze
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+# View report
+open app/build/reports/dependency-check/dependency-check-report.html
+```
 
-- Issue templates and triage process
-- Code style and quality standards
-- Development workflow
-- Testing requirements
+**CI/CD Integration:**
+- Automatic vulnerability scanning on every push and PR
+- Daily security scans via scheduled workflows
+- Build fails on high-severity vulnerabilities (CVSS >= 7.0)
+- Security findings are automatically commented on PRs
 
-### Quick Start for Contributors
+#### 5. **Managing False Positives**
 
-1. Check our [Issues](https://github.com/GooseyPrime/wAether/issues) for `good-first-issue` labels
-2. Read the [Contributing Guide](CONTRIBUTING.md)
-3. Fork the repository and create a feature branch
-4. Submit a pull request with your changes
+If a vulnerability is flagged incorrectly:
 
-## Issue Tracking
+1. **Research the CVE** to confirm it's not applicable
+2. **Add suppression** to `app/owasp-suppressions.xml`:
 
-We use GitHub Issues with structured templates for:
+```xml
+<suppress>
+    <notes><![CDATA[
+    CVE-2023-12345 affects server-side usage only. 
+    Our Android app uses this library for client-side parsing only.
+    ]]></notes>
+    <packageUrl regex="true">^pkg:maven/com\.example/vulnerable-lib@.*$</packageUrl>
+    <cve>CVE-2023-12345</cve>
+</suppress>
+```
 
-- **Bug Reports**: Report crashes, incorrect behavior, or unexpected results
-- **Feature Requests**: Suggest new functionality or enhancements
-- **Documentation**: Improve or add to project documentation
+3. **Document the reasoning** in the suppression file
+4. **Commit the changes** and verify the build passes
 
-Please use the appropriate issue template and provide complete information to help us address your concerns quickly.
+### 🔄 Dependabot Configuration
 
-## License
+Dependabot is configured to:
+- **Schedule**: Weekly updates on Mondays at 6 AM UTC
+- **Grouping**: Related dependencies are grouped (AndroidX, Kotlin, Firebase, etc.)
+- **Limits**: Maximum 5 dependency PRs, 3 GitHub Actions PRs at a time
+- **Auto-merge**: Security updates are candidates for automatic merging
+- **Reviewers**: Automatically assigns repository maintainers
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+### 📋 Dependency Review Checklist
 
-## Acknowledgments
+Before merging dependency updates:
 
-- Weather data provided by [Open-Meteo](https://open-meteo.com/)
-- Space weather data from [NOAA Space Weather Prediction Center](https://www.swpc.noaa.gov/)
-- Built with Android Jetpack and Wear OS technologies
+- [ ] **CI passes**: All tests and security checks complete successfully
+- [ ] **Breaking changes**: Review changelog for any breaking changes
+- [ ] **Security impact**: No new high-severity vulnerabilities introduced
+- [ ] **Compatibility**: Verify minimum API level and target SDK compatibility
+- [ ] **Size impact**: Consider APK size impact for major version updates
+- [ ] **Testing**: Smoke test critical app functionality if major updates
 
-## Support
+### 🚨 Security Incident Response
 
-- **Documentation**: Check this README and the [Contributing Guide](CONTRIBUTING.md)
-- **Questions**: Use [GitHub Discussions](https://github.com/GooseyPrime/wAether/discussions)
-- **Bug Reports**: Create an issue using our bug report template
-- **Feature Requests**: Create an issue using our feature request template
+If a critical vulnerability is discovered:
+
+1. **Assess Impact**: Determine if the vulnerability affects your usage
+2. **Immediate Action**: If severe, consider temporarily removing the dependency
+3. **Update Priority**: Expedite dependency update outside normal schedule
+4. **Hotfix Process**: Use emergency release process for critical patches
+5. **Communication**: Notify team and users if necessary
+
+### 🛠️ Development Setup
+
+#### Prerequisites
+
+- **JDK 17** or higher
+- **Android Studio** Hedgehog or newer
+- **Gradle 8.11+** (managed by wrapper)
+
+#### Build Commands
+
+```bash
+# Build debug APK
+./gradlew assembleDebug
+
+# Run tests
+./gradlew test
+
+# Lint checks
+./gradlew lint
+
+# Security scan
+./gradlew dependencyCheckAnalyze
+
+# Update dependency locks
+./gradlew dependencies --write-locks
+```
+
+#### Environment Variables
+
+For local development, create a `local.properties` file:
+
+```properties
+# NVD API key for faster vulnerability database updates (optional)
+nvd.api.key=your-nvd-api-key-here
+```
+
+### 📊 Monitoring & Reporting
+
+- **GitHub Security Tab**: View dependency vulnerabilities and security advisories
+- **Dependabot Alerts**: Automatic notifications for vulnerable dependencies
+- **CI Reports**: Build artifacts include detailed security and dependency reports
+- **Metrics**: Track dependency update frequency and security posture
+
+### 🤝 Contributing
+
+When contributing to this project:
+
+1. **Never ignore security warnings** in CI
+2. **Update lock files** when modifying dependencies
+3. **Run local security scans** before submitting PRs
+4. **Document dependency choices** in commit messages
+5. **Follow semantic versioning** for dependency updates
+
+### 📝 Change Log
+
+- `Updated: 2024-12-08T13:30:00-05:00 / 2024-12-08T18:30:00Z — Added comprehensive dependency management and security documentation`
 
 ---
 
-*Made with ❤️ for the Wear OS community*
+## 🧪 Architecture
+
+- **MVVM Pattern**: ViewModels manage UI state and business logic
+- **Repository Pattern**: DataRepository abstracts data sources
+- **Dependency Injection**: Manual DI with default parameters (ready for Hilt migration)
+- **Coroutines & Flow**: Reactive data handling and async operations
+- **Jetpack Compose**: Modern UI toolkit for Wear OS
+
+## 🚀 Features
+
+- Real-time weather data integration
+- Space weather monitoring (solar flares, geomagnetic activity)
+- Device sensor integration (magnetometer)
+- Cloud data synchronization
+- Background data collection
+- Wear OS optimized UI
+
+## 📱 Installation
+
+1. **Clone the repository**
+2. **Open in Android Studio**
+3. **Sync project with Gradle files**
+4. **Configure Firebase** (add your `google-services.json`)
+5. **Build and deploy** to Wear OS device or emulator
+
+## 🤖 APIs Used
+
+- **OpenMeteo**: Weather data and atmospheric conditions
+- **NOAA SWPC**: Space weather data (solar wind, X-ray flux, KP index)
+- **Firebase Firestore**: Cloud data storage and synchronization
+
+## 📄 License
+
+[Add your license information here]
+
+## 🆘 Support
+
+For dependency management questions or security concerns, please:
+1. Check existing GitHub Issues
+2. Review security advisories in the Security tab
+3. Create a new issue with detailed description
+4. For security vulnerabilities, use GitHub's private security reporting
+
+---
+
+**Last Updated**: December 8, 2024

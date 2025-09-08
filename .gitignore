@@ -57,65 +57,23 @@ captures/
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
-.cxx/
+.cxx
+local.properties
 
-# Google Services (e.g. APIs or Firebase)
-# Comment the following line if you want to keep your google-services.json for release builds
-google-services.json
+# Security and dependency management
+# Include dependency lock files in version control
+# !gradle/dependency-locks/*.lockfile
 
-# Freeline
-freeline.py
-freeline/
-freeline_project_description.json
+# OWASP dependency check cache
+dependency-check-data/
 
-# fastlane
-fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots
-fastlane/test_output
-fastlane/readme.md
+# NVD API key (keep secrets out of version control)
+nvd.api.key
 
-# Version control
-vcs.xml
+# Dependency update reports (generated artifacts)
+/app/build/reports/dependency-updates/
+/app/build/reports/dependency-check/
 
-# lint
-lint/intermediates/
-lint/generated/
-lint/outputs/
-lint/tmp/
-# lint/reports/
-
-# Android Profiling
-*.hprof
-
-# Temporary files
-*.tmp
-*.temp
-*~
-
-# OS Files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Firebase configuration files (sensitive)
-app/google-services.json
-google-services.json
-
-# Environment files
-.env
-.env.local
-.env.*.local
-
-# Test results
-test-results/
-test-output/
-coverage/
-
-# Backup files
-*.bak
-*.backup
+# IDE-specific dependency management files
+.idea/gradle.xml
+.idea/jarRepositories.xml

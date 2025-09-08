@@ -1,0 +1,135 @@
+name: Dependabot Auto-merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+
+jobs:
+  dependabot-auto-merge:
+    name: Auto-merge Dependabot PRs
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Fetch Dependabot metadata
+      id: metadata
+      uses: dependabot/fetch-metadata@v2
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+    - name: Check if this is a security update
+      id: security-check
+      run: |
+        if [[ "${{ steps.metadata.outputs.update-type }}" == "version-update:semver-patch" ]] || \
+           [[ "${{ steps.metadata.outputs.update-type }}" == "version-update:semver-minor" ]] || \
+           [[ "${{ contains(github.event.pull_request.labels.*.name, 'security') }}" == "true" ]]; then
+          echo "auto-merge=true" >> $GITHUB_OUTPUT
+        else
+          echo "auto-merge=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Wait for CI checks
+      if: steps.security-check.outputs.auto-merge == 'true'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { owner, repo } = context.repo;
+          const { number } = context.issue;
+          
+          // Wait for all required checks to complete
+          const checkRunsResponse = await github.rest.checks.listForRef({
+            owner,
+            repo,
+            ref: context.payload.pull_request.head.sha,
+          });
+          
+          const statusResponse = await github.rest.repos.getCombinedStatusForRef({
+            owner,
+            repo,
+            ref: context.payload.pull_request.head.sha,
+          });
+          
+          console.log('Check runs:', checkRunsResponse.data.check_runs.length);
+          console.log('Statuses:', statusResponse.data.statuses.length);
+          
+          // Check if all checks pass
+          const allChecksPassed = checkRunsResponse.data.check_runs
+            .every(check => check.conclusion === 'success' || check.conclusion === 'neutral');
+          
+          const allStatusesPassed = statusResponse.data.statuses
+            .every(status => status.state === 'success');
+          
+          if (!allChecksPassed || !allStatusesPassed) {
+            core.setFailed('Not all checks have passed yet');
+          }
+
+    - name: Auto-approve PR
+      if: steps.security-check.outputs.auto-merge == 'true'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          await github.rest.pulls.createReview({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number,
+            event: 'APPROVE',
+            body: '🤖 Auto-approving this Dependabot security/patch update after successful CI checks.'
+          });
+
+    - name: Enable auto-merge
+      if: steps.security-check.outputs.auto-merge == 'true'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          await github.rest.pulls.createReview({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number,
+            event: 'APPROVE'
+          });
+          
+          await github.rest.pulls.merge({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number,
+            merge_method: 'squash',
+            commit_title: context.payload.pull_request.title,
+            commit_message: 'Auto-merged by Dependabot workflow after successful security checks.'
+          });
+
+    - name: Comment on manual review needed
+      if: steps.security-check.outputs.auto-merge == 'false'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const updateType = '${{ steps.metadata.outputs.update-type }}';
+          const body = `🔍 **Manual Review Required**
+          
+          This Dependabot PR requires manual review because:
+          - Update type: \`${updateType}\`
+          - This is a major version update that may contain breaking changes
+          
+          Please review the changelog and test thoroughly before merging.
+          
+          **Security Checklist:**
+          - [ ] Reviewed changelog for breaking changes
+          - [ ] Verified no new high-severity vulnerabilities
+          - [ ] Tested critical app functionality
+          - [ ] Confirmed API compatibility`;
+          
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body
+          });

@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services") // Google services plugin for Firebase
     id("com.google.devtools.ksp") version "1.9.23-1.0.19" // Or your current KSP version
+    id("org.owasp.dependencycheck") // OWASP Dependency Check for vulnerability scanning
+    id("com.github.ben-manes.versions") // Gradle Versions Plugin for dependency updates
 }
 
 android {
@@ -125,4 +127,73 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.05.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+}
+
+// OWASP Dependency Check configuration for vulnerability scanning
+dependencyCheck {
+    // Set the format of the output report
+    formats = listOf("HTML", "JSON", "XML")
+    
+    // Directory where the reports will be written
+    outputDirectory = "build/reports/dependency-check"
+    
+    // Configure suppressions for false positives
+    suppressionFile = "owasp-suppressions.xml"
+    
+    // Skip test dependencies for production vulnerability scanning
+    skipTestScope = false
+    
+    // Configure NVD API
+    nvd {
+        // Add your NVD API key if you have one (recommended for faster updates)
+        // apiKey = project.findProperty("nvd.api.key") as String? ?: ""
+        
+        // Number of hours to wait before checking for new updates from the NVD
+        validForHours = 24
+    }
+    
+    // Configure analyzers
+    analyzers {
+        // Disable some analyzers that might not be relevant for Android projects
+        assemblyEnabled = false
+        nuspecEnabled = false
+        nugetconfEnabled = false
+        
+        // Enable Android-relevant analyzers
+        jarEnabled = true
+        archiveEnabled = true
+        
+        // Experimental analyzers (can be slow)
+        nexusEnabled = false
+        ossIndexEnabled = true
+    }
+    
+    // Fail build on CVSS score threshold
+    failBuildOnCVSS = 7.0f // High severity and above
+    
+    // Configure what to include/exclude
+    scanConfigurations = listOf("runtimeClasspath", "compileClasspath")
+}
+
+// Gradle Versions Plugin configuration for dependency updates
+dependencyUpdates {
+    // Reject release candidates and other pre-release versions
+    rejectVersionIf {
+        candidate.version.isNonStable() && !currentVersion.isNonStable()
+    }
+    
+    // Check build.gradle files for dependencies
+    checkForGradleUpdate = true
+    
+    // Output format
+    outputFormatter = "html"
+    outputDir = "build/reports/dependency-updates"
+}
+
+// Helper function to identify non-stable versions
+fun String.isNonStable(): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { this.uppercase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(this)
+    return isStable.not()
 }
