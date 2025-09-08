@@ -7,16 +7,15 @@ pluginManagement {
         mavenCentral() // Maven Central repository
         gradlePluginPortal() // Gradle Plugin Portal
     }
-    // It's good practice to define plugin versions here if not using version catalogs,
-    // though we also declared them in the root build.gradle.kts for clarity.
-    // If defined here, you might not need the version in the root build.gradle.kts plugins block.
-    // Example:
-    // plugins {
-    //     id("com.android.application") version "8.3.2"
-    //     id("org.jetbrains.kotlin.android") version "1.9.23"
-    //     id("com.google.gms.google-services") version "4.4.1"
-    //     id("com.google.devtools.ksp") version "1.9.23-1.0.19"
-    // }
+    plugins {
+        id("com.android.application") version "8.1.4"
+        id("org.jetbrains.kotlin.android") version "1.9.23"
+        id("com.google.gms.google-services") version "4.4.1"
+        id("com.google.devtools.ksp") version "1.9.23-1.0.19"
+        id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
+        id("org.owasp.dependencycheck") version "8.4.3"
+        id("com.github.ben-manes.versions") version "0.50.0"
+    }
 }
 
 dependencyResolutionManagement {

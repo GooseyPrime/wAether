@@ -1,0 +1,18 @@
+# ktlint configuration
+# This file configures ktlint rules for the project
+
+# Disable specific rules that may conflict with Android/Compose conventions
+disabled_rules=no-wildcard-imports,import-ordering
+
+# Android-specific settings
+android=true
+
+# Max line length for Kotlin code
+max_line_length=120
+
+# Indent size
+indent_size=4
+
+# Use trailing commas
+trailing-comma-on-call-site=true
+trailing-comma-on-declaration-site=true

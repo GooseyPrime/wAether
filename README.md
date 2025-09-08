@@ -1,126 +1,104 @@
-# wAether
 
-A Wear OS application for tracking weather and space weather data with mood correlation analysis.
+# wAether ⌚
 
-## Overview
+[![CI/CD Pipeline](https://github.com/GooseyPrime/wAether/actions/workflows/ci.yml/badge.svg)](https://github.com/GooseyPrime/wAether/actions/workflows/ci.yml)
 
-wAether is a Wear OS smartwatch application that combines traditional weather data with space weather information (solar activity, magnetic field data, etc.) to help users understand potential correlations with their mood and well-being.
+A sophisticated Wear OS watch face that displays weather data, space weather information, and local sensor readings to help you understand the environment around you.
 
 ## Features
 
-- **Watch Face Integration**: Real-time weather and space weather display
-- **Multi-Source Data Collection**: 
-  - Local weather (OpenMeteo API)
-  - Space weather data (NOAA SWPC)
-  - Device sensors (magnetometer, location)
-  - User mood tracking
-- **Firebase Integration**: Secure data storage and analysis
-- **Background Monitoring**: Periodic automated data collection
+- **Weather Integration**: Local weather conditions via OpenMeteo API
+- **Space Weather**: Solar activity, X-ray flux, and Kp index data from NOAA
+- **Device Sensors**: Magnetometer readings for local magnetic field data
+- **Firebase Integration**: Data logging and mood tracking
+- **Material Design**: Modern Wear OS UI with Jetpack Compose
+- **Background Processing**: Periodic data collection with WorkManager
 
-## Technology Stack
+## Architecture
 
-- **Platform**: Android Wear OS
-- **Language**: Kotlin
-- **UI Framework**: Jetpack Compose for Wear OS
-- **Architecture**: MVVM with Repository pattern
-- **Data Sources**:
-  - OpenMeteo API (weather data)
-  - NOAA Space Weather Prediction Center API
-  - Android sensor framework
-- **Storage**: Firebase Firestore
-- **Build System**: Gradle with Kotlin DSL
+This project follows Android architecture best practices:
 
-## Project Structure
+- **MVVM Pattern**: Clear separation between UI, business logic, and data
+- **Repository Pattern**: Centralized data access layer
+- **Dependency Injection**: Clean dependency management
+- **Coroutines**: Asynchronous operations and reactive programming
+- **Jetpack Compose**: Modern declarative UI for Wear OS
 
-```
-wAether/
-├── app/
-│   ├── src/main/java/com/wAether/
-│   │   ├── data/          # Data layer (models, network, repository)
-│   │   ├── ui/            # UI layer (composables, viewmodels)
-│   │   ├── sensor/        # Sensor data providers
-│   │   ├── workers/       # Background tasks
-│   │   └── util/          # Utility classes
-│   └── build.gradle.kts
-├── build.gradle.kts
-└── settings.gradle.kts
-```
-## Getting Started
+## Development
 
 ### Prerequisites
 
-- Android Studio Hedgehog (2023.1.1) or later
-- Wear OS SDK
-- Kotlin 1.9.23+
-- Android Gradle Plugin 8.10.0+
+- Android Studio Hedgehog or later
+- JDK 17
+- Wear OS emulator or physical Wear OS device
+- Firebase project setup (optional for full functionality)
 
-### Setup
+### Building
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/GooseyPrime/wAether.git
-   cd wAether
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/GooseyPrime/wAether.git
+cd wAether
 
-2. Open the project in Android Studio
+# Build debug APK
+./gradlew assembleDebug
 
-3. Set up Firebase:
-   - Add your `google-services.json` file to the `app/` directory
-   - Configure Firebase Firestore in your project
+# Run tests
+./gradlew test
 
-4. Build and run:
-   ```bash
-   ./gradlew build
-   ```
+# Run linting
+./gradlew ktlintCheck
+```
 
-### Testing on Wear OS
+### Testing
 
-- Use a physical Wear OS device or
-- Set up a Wear OS emulator in Android Studio
+The project includes both unit tests and instrumented tests:
+
+- **Unit Tests**: `app/src/test/java/com/wAether/`
+- **Instrumented Tests**: `app/src/androidTest/java/com/wAether/`
+
+### Code Quality
+
+We maintain high code quality through:
+
+- **Kotlin Linting**: Automated with ktlint
+- **Android Lint**: Static analysis for Android-specific issues  
+- **Unit Testing**: Comprehensive test coverage
+- **Instrumented Testing**: UI and integration tests
+- **CI/CD Pipeline**: Automated testing and deployment
+
+## CI/CD
+
+Our GitHub Actions workflow ensures code quality and reliability:
+
+- 🔍 **Linting**: Kotlin and Android lint checks
+- 🧪 **Testing**: Unit and instrumented tests
+- 🔨 **Building**: Debug and release APK generation
+- 🚀 **Deployment**: Automated releases for tagged commits
+
+## APIs Used
+
+- [OpenMeteo](https://open-meteo.com/): Weather data
+- [NOAA SWPC](https://services.swpc.noaa.gov/): Space weather data
+- [Firebase Firestore](https://firebase.google.com/docs/firestore): Data storage
+- [Google Play Services](https://developers.google.com/android/guides/overview): Location services
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-- Issue templates and triage process
-- Code style and quality standards
-- Development workflow
-- Testing requirements
-
-### Quick Start for Contributors
-
-1. Check our [Issues](https://github.com/GooseyPrime/wAether/issues) for `good-first-issue` labels
-2. Read the [Contributing Guide](CONTRIBUTING.md)
-3. Fork the repository and create a feature branch
-4. Submit a pull request with your changes
-
-## Issue Tracking
-
-We use GitHub Issues with structured templates for:
-
-- **Bug Reports**: Report crashes, incorrect behavior, or unexpected results
-- **Feature Requests**: Suggest new functionality or enhancements
-- **Documentation**: Improve or add to project documentation
-
-Please use the appropriate issue template and provide complete information to help us address your concerns quickly.
+Please ensure your code follows our style guidelines and passes all tests.
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Weather data provided by [Open-Meteo](https://open-meteo.com/)
-- Space weather data from [NOAA Space Weather Prediction Center](https://www.swpc.noaa.gov/)
-- Built with Android Jetpack and Wear OS technologies
-
-## Support
-
-- **Documentation**: Check this README and the [Contributing Guide](CONTRIBUTING.md)
-- **Questions**: Use [GitHub Discussions](https://github.com/GooseyPrime/wAether/discussions)
-- **Bug Reports**: Create an issue using our bug report template
-- **Feature Requests**: Create an issue using our feature request template
-
----
-
-*Made with ❤️ for the Wear OS community*
+- Space weather data provided by NOAA Space Weather Prediction Center
+- Weather data provided by Open-Meteo
+- Built with ❤️ for the Wear OS community

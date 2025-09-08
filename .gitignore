@@ -57,65 +57,23 @@ captures/
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
-.cxx/
+.cxx
+local.properties
 
-# Google Services (e.g. APIs or Firebase)
-# Comment the following line if you want to keep your google-services.json for release builds
-google-services.json
-
-# Freeline
-freeline.py
-freeline/
-freeline_project_description.json
-
-# fastlane
-fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots
-fastlane/test_output
-fastlane/readme.md
-
-# Version control
-vcs.xml
-
-# lint
-lint/intermediates/
-lint/generated/
-lint/outputs/
-lint/tmp/
-# lint/reports/
-
-# Android Profiling
-*.hprof
+# Test reports and coverage
+app/build/reports/
+app/build/test-results/
+app/build/outputs/
 
 # Temporary files
 *.tmp
 *.temp
-*~
+/tmp/
 
-# OS Files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Firebase configuration files (sensitive)
-app/google-services.json
+# Firebase config (if using)
 google-services.json
 
-# Environment files
-.env
-.env.local
-.env.*.local
-
-# Test results
-test-results/
-test-output/
-coverage/
-
-# Backup files
-*.bak
-*.backup
+# Keystore files (never commit these!)
+*.keystore
+*.jks
+release/

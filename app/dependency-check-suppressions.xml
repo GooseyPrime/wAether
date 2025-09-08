@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <!-- 
+    This file contains suppressions for known false positives in dependency check.
+    Add suppressions here for vulnerabilities that don't apply to this project.
+    -->
+    
+    <!-- Example suppression for a specific CVE -->
+    <!--
+    <suppress>
+        <notes><![CDATA[
+        This vulnerability is not applicable because...
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.example/.*$</packageUrl>
+        <cve>CVE-2023-12345</cve>
+    </suppress>
+    -->
+</suppressions>

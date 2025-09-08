@@ -1,38 +1,39 @@
 ---
 name: Bug Report
-about: Create a report to help us improve wAether
+about: Create a report to help us improve
 title: '[BUG] '
-labels: 'bug'
+labels: ['bug']
 assignees: ''
-
 ---
 
-**Describe the bug**
+## Bug Description
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
+## Steps to Reproduce
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
 
-**Expected behavior**
+## Expected Behavior
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
+## Actual Behavior
+A clear and concise description of what actually happened.
+
+## Screenshots
 If applicable, add screenshots to help explain your problem.
 
-**Device Information:**
- - Wear OS Version: [e.g. Wear OS 3.0]
- - Device: [e.g. Galaxy Watch 4]
- - App Version: [e.g. 1.0]
+## Environment
+- Device: [e.g. Samsung Galaxy Watch 4]
+- OS Version: [e.g. Wear OS 3.5]
+- App Version: [e.g. 1.0.0]
 
-**Additional context**
-Add any other context about the problem here, including error logs if available.
+## Additional Context
+Add any other context about the problem here.
 
-**Logs**
-If applicable, please include relevant log output:
+## Logs
+If applicable, add relevant log output here.
 ```
-Paste logs here
+[Log output]
 ```
