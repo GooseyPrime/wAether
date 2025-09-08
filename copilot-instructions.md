@@ -103,4 +103,5 @@ These rules are project‑independent. Extend or override them only if repo docu
 - Review and update dependencies regularly.
 - Use GitHub Actions for CI/CD where possible.
 - Document setup, build, and deployment steps in the `README.md`.
+- Use project issue templates and follow triage guidelines (see `.github/ISSUE_MANAGEMENT.md`).
 - Respect the [GitHub Community Guidelines](https://docs.github.com/en/site-policy/github-terms/github-community-guidelines).

@@ -70,6 +70,7 @@ The project uses ktlint for Kotlin code formatting and Android Lint for static a
 # Run Android Lint
 ./gradlew lintDebug
 ```
+## Getting Started
 
 ## CI/CD
 
