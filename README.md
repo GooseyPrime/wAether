@@ -1,126 +1,143 @@
 # wAether
 
-A Wear OS application for tracking weather and space weather data with mood correlation analysis.
+A Wear OS watch face application for tracking weather and atmospheric conditions.
 
-## Overview
+## Development Setup
 
-wAether is a Wear OS smartwatch application that combines traditional weather data with space weather information (solar activity, magnetic field data, etc.) to help users understand potential correlations with their mood and well-being.
+### Quick Setup
 
-## Features
+Run the automated setup script:
 
-- **Watch Face Integration**: Real-time weather and space weather display
-- **Multi-Source Data Collection**: 
-  - Local weather (OpenMeteo API)
-  - Space weather data (NOAA SWPC)
-  - Device sensors (magnetometer, location)
-  - User mood tracking
-- **Firebase Integration**: Secure data storage and analysis
-- **Background Monitoring**: Periodic automated data collection
+```bash
+./scripts/setup-dev.sh
+```
 
-## Technology Stack
+This script will:
+- Make gradlew executable
+- Optionally install git pre-commit hooks
+- Run initial code quality checks
 
-- **Platform**: Android Wear OS
-- **Language**: Kotlin
-- **UI Framework**: Jetpack Compose for Wear OS
-- **Architecture**: MVVM with Repository pattern
-- **Data Sources**:
-  - OpenMeteo API (weather data)
-  - NOAA Space Weather Prediction Center API
-  - Android sensor framework
-- **Storage**: Firebase Firestore
-- **Build System**: Gradle with Kotlin DSL
+### Manual Setup
 
-## Project Structure
+#### Prerequisites
+
+- Android Studio Arctic Fox or later
+- JDK 17 or later
+- Android SDK with Wear OS support
+- Gradle 8.11.1+
+
+### Code Quality & Linting
+
+This project enforces code quality through automated linting and formatting tools:
+
+#### Tools Used
+
+- **ktlint**: Kotlin code formatting and style checking
+- **detekt**: Static code analysis for Kotlin
+- **EditorConfig**: Consistent coding style across editors
+
+#### Local Development Commands
+
+```bash
+# Format Kotlin code automatically
+./gradlew formatKotlin
+
+# Check code style and run static analysis
+./gradlew lintKotlin
+
+# Run all code quality checks
+./gradlew codeQuality
+
+# Individual tool commands
+./gradlew ktlintCheck      # Check formatting only
+./gradlew ktlintFormat     # Auto-fix formatting issues
+./gradlew detekt           # Run static analysis
+```
+
+#### CI/CD Integration
+
+Code quality checks are automatically enforced in CI/CD:
+
+- **Pre-merge**: All PRs must pass ktlint and detekt checks
+- **Reports**: Detailed analysis reports are generated and uploaded as artifacts
+- **Auto-formatting**: Use `./gradlew formatKotlin` before committing
+
+#### Configuration Files
+
+- `.editorconfig`: Editor-agnostic coding style configuration
+- `config/detekt/detekt.yml`: Detekt rules and configuration
+- Individual tool configurations in `app/build.gradle.kts`
+
+#### IDE Integration
+
+Most IDEs can integrate with these tools:
+
+**Android Studio/IntelliJ IDEA:**
+1. Install the ktlint plugin
+2. Install the detekt plugin
+3. Configure to use project's .editorconfig
+
+**VS Code:**
+1. Install Kotlin extension
+2. Install EditorConfig extension
+
+#### Bypassing Checks (Not Recommended)
+
+If you need to bypass checks temporarily:
+
+```bash
+# Skip ktlint for specific files (add to .ktlintignore)
+echo "path/to/file.kt" >> .ktlintignore
+
+# Disable specific detekt rules (add to detekt.yml)
+# See config/detekt/detekt.yml for examples
+```
+
+### Building the Project
+
+```bash
+# Build debug version
+./gradlew assembleDebug
+
+# Build release version
+./gradlew assembleRelease
+
+# Run unit tests
+./gradlew testDebugUnitTest
+
+# Run all checks and build
+./gradlew check assembleDebug
+```
+
+### Project Structure
 
 ```
-wAether/
-├── app/
-│   ├── src/main/java/com/wAether/
-│   │   ├── data/          # Data layer (models, network, repository)
-│   │   ├── ui/            # UI layer (composables, viewmodels)
-│   │   ├── sensor/        # Sensor data providers
-│   │   ├── workers/       # Background tasks
-│   │   └── util/          # Utility classes
-│   └── build.gradle.kts
-├── build.gradle.kts
-└── settings.gradle.kts
+app/
+├── src/
+│   ├── main/
+│   │   ├── java/com/wAether/     # Kotlin source files
+│   │   └── res/                  # Android resources
+│   └── test/                     # Unit tests
+config/
+└── detekt/
+    └── detekt.yml               # Detekt configuration
+.editorconfig                    # Code style configuration
+.github/
+└── workflows/
+    └── code-quality.yml         # CI/CD pipeline
 ```
-## Getting Started
-
-### Prerequisites
-
-- Android Studio Hedgehog (2023.1.1) or later
-- Wear OS SDK
-- Kotlin 1.9.23+
-- Android Gradle Plugin 8.10.0+
-
-### Setup
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/GooseyPrime/wAether.git
-   cd wAether
-   ```
-
-2. Open the project in Android Studio
-
-3. Set up Firebase:
-   - Add your `google-services.json` file to the `app/` directory
-   - Configure Firebase Firestore in your project
-
-4. Build and run:
-   ```bash
-   ./gradlew build
-   ```
-
-### Testing on Wear OS
-
-- Use a physical Wear OS device or
-- Set up a Wear OS emulator in Android Studio
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run `./gradlew codeQuality` to ensure code quality
+5. Commit your changes with conventional commit messages
+6. Push to your branch and create a Pull Request
 
-- Issue templates and triage process
-- Code style and quality standards
-- Development workflow
-- Testing requirements
-
-### Quick Start for Contributors
-
-1. Check our [Issues](https://github.com/GooseyPrime/wAether/issues) for `good-first-issue` labels
-2. Read the [Contributing Guide](CONTRIBUTING.md)
-3. Fork the repository and create a feature branch
-4. Submit a pull request with your changes
-
-## Issue Tracking
-
-We use GitHub Issues with structured templates for:
-
-- **Bug Reports**: Report crashes, incorrect behavior, or unexpected results
-- **Feature Requests**: Suggest new functionality or enhancements
-- **Documentation**: Improve or add to project documentation
-
-Please use the appropriate issue template and provide complete information to help us address your concerns quickly.
+All contributions must pass the automated code quality checks before merging.
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Weather data provided by [Open-Meteo](https://open-meteo.com/)
-- Space weather data from [NOAA Space Weather Prediction Center](https://www.swpc.noaa.gov/)
-- Built with Android Jetpack and Wear OS technologies
-
-## Support
-
-- **Documentation**: Check this README and the [Contributing Guide](CONTRIBUTING.md)
-- **Questions**: Use [GitHub Discussions](https://github.com/GooseyPrime/wAether/discussions)
-- **Bug Reports**: Create an issue using our bug report template
-- **Feature Requests**: Create an issue using our feature request template
-
----
-
-*Made with ❤️ for the Wear OS community*
+[License information would go here]

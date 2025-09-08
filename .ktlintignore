@@ -1,0 +1,21 @@
+# ktlint ignore file for wAether project
+# Files and directories to exclude from ktlint checks
+
+# Generated files
+**/build/**
+**/generated/**
+**/*.generated.kt
+
+# Build artifacts
+**/bin/**
+**/out/**
+
+# IDE files
+**/.idea/**
+
+# Gradle wrapper
+gradlew.bat
+gradle/
+
+# External dependencies
+**/node_modules/**
