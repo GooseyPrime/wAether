@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services") // Google services plugin for Firebase
     id("com.google.devtools.ksp") version "1.9.10-1.0.13" // Or your current KSP version
+    id("org.jlleitschuh.gradle.ktlint") // ktlint for code formatting
+    id("io.gitlab.arturbosch.detekt") // detekt for static code analysis
 }
 
 android {
@@ -125,4 +127,45 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.05.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+}
+
+// ktlint configuration
+ktlint {
+    version.set("1.0.1")
+    debug.set(false)
+    verbose.set(true)
+    android.set(true)
+    outputToConsole.set(true)
+    outputColorName.set("RED")
+    ignoreFailures.set(false)
+    enableExperimentalRules.set(true)
+    
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
+}
+
+// detekt configuration
+detekt {
+    toolVersion = "1.23.4"
+    config.setFrom(file("../config/detekt/detekt.yml"))
+    buildUponDefaultConfig = true
+    allRules = false
+    
+    source.setFrom(
+        "src/main/java",
+        "src/test/java",
+        "src/androidTest/java"
+    )
+    
+    parallel = true
+    
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        txt.required.set(false)
+        sarif.required.set(false)
+        md.required.set(false)
+    }
 }
