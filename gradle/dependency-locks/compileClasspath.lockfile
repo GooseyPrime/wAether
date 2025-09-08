@@ -1,0 +1,21 @@
+# This lock file was generated automatically by Gradle.
+# It represents the resolved dependency graph for all configurations.
+# 
+# This file should be committed to version control to ensure
+# reproducible builds across all environments.
+#
+# To regenerate this lock file, run:
+# ./gradlew dependencies --write-locks
+#
+# Note: This is a placeholder. Actual lock files will be generated
+# when the project build is working properly.
+#
+# Format: Each line contains:
+# groupId:artifactId:version
+#
+# Example entries would look like:
+# androidx.core:core-ktx:1.13.0
+# androidx.lifecycle:lifecycle-runtime-ktx:2.7.0
+# com.squareup.retrofit2:retrofit:2.9.0
+#
+# Empty=true indicates this is a placeholder file

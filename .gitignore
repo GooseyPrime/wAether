@@ -13,3 +13,21 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Security and dependency management
+# Include dependency lock files in version control
+# !gradle/dependency-locks/*.lockfile
+
+# OWASP dependency check cache
+dependency-check-data/
+
+# NVD API key (keep secrets out of version control)
+nvd.api.key
+
+# Dependency update reports (generated artifacts)
+/app/build/reports/dependency-updates/
+/app/build/reports/dependency-check/
+
+# IDE-specific dependency management files
+.idea/gradle.xml
+.idea/jarRepositories.xml
