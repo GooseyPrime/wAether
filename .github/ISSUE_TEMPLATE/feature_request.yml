@@ -1,0 +1,103 @@
+name: Feature Request
+description: Suggest a new feature or enhancement for wAether
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new feature! Please provide the following information to help us understand your request.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting
+      options:
+        - label: I have searched existing issues and this feature hasn't been requested
+          required: true
+        - label: This feature is related to wAether's core functionality (weather, space weather, mood tracking)
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? Is your feature request related to a problem?
+      placeholder: I'm always frustrated when...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like to see implemented
+      placeholder: I would like to see...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feature Category
+      description: Which area of wAether does this feature relate to?
+      options:
+        - Weather Display
+        - Space Weather Monitoring
+        - Mood Tracking
+        - Watch Face Design
+        - Data Collection
+        - User Interface
+        - Performance
+        - Accessibility
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How important is this feature to you?
+      options:
+        - Low (Nice to have)
+        - Medium (Would improve experience)
+        - High (Significantly impacts usability)
+        - Critical (App is unusable without it)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Estimated Complexity
+      description: How complex do you think this feature would be to implement?
+      options:
+        - Simple (UI change, configuration option)
+        - Moderate (New data source, algorithm update)
+        - Complex (Major architectural change)
+        - Unknown
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or features you've considered
+      placeholder: A clear and concise description of any alternative solutions...
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, mockups, or screenshots about the feature request here
+
+  - type: checkboxes
+    id: implementation
+    attributes:
+      label: Implementation Willingness
+      description: Are you willing to help implement this feature?
+      options:
+        - label: I'm willing to help with implementation
+        - label: I can provide testing and feedback
+        - label: I can help with documentation
