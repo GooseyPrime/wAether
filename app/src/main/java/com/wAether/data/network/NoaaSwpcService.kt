@@ -9,17 +9,17 @@ import retrofit2.http.GET
 interface NoaaSwpcService {
     @GET("planetary_k_index_1m.json")
     suspend fun getCurrentKpIndex(): Response<List<List<String>>>
-    
+
     @GET("goes_xray_flux_primary_1m.json")
     suspend fun getXrayFlux(): Response<List<List<String>>>
-    
+
     // Alternative method names for compatibility
     @GET("planetary_k_index_1m.json")
     suspend fun getPlanetaryKpIndex(): Response<List<List<String>>>
-    
+
     @GET("goes_xray_flux_primary_1m.json")
     suspend fun getGoesXrayFlux(): Response<List<List<String>>>
-    
+
     @GET("real_time_solar_wind_1m.json")
     suspend fun getRealTimeSolarWind(): Response<List<List<String>>>
 }
