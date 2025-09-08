@@ -13,3 +13,29 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Environment and configuration files
+.env
+.env.local
+.env.staging
+.env.production
+*.env
+
+# Firebase configuration (should be managed securely)
+google-services.json
+firebase-adminsdk-*.json
+
+# Signing keys and certificates
+*.keystore
+*.jks
+key.properties
+
+# Build outputs
+app/build/
+build/
+*/build/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
