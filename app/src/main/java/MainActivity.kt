@@ -19,10 +19,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -113,11 +111,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(
-    permissionsGranted: Boolean,
-    onRequestPermissions: () -> Unit,
-    onSelectWatchFace: () -> Unit
-) {
+fun MainScreen(permissionsGranted: Boolean, onRequestPermissions: () -> Unit, onSelectWatchFace: () -> Unit) {
     val context = LocalContext.current as Activity
 
     Column(
@@ -131,13 +125,19 @@ fun MainScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         if (permissionsGranted) {
-            Text("All set! Select the wAether face from your watch face picker.", textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            Text(
+                "All set! Select the wAether face from your watch face picker.",
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = onSelectWatchFace) {
                 Text("Choose Watch Face")
             }
         } else {
-            Text("wAether needs permissions for location and sensors to provide all features.", textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            Text(
+                "wAether needs permissions for location and sensors to provide all features.",
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = onRequestPermissions) {
                 Text("Grant Permissions")

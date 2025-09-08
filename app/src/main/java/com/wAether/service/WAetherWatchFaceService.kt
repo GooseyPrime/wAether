@@ -1,5 +1,6 @@
 package com.wAether.service
 
+import android.util.Log
 import android.view.SurfaceHolder
 import androidx.wear.watchface.ComplicationSlotsManager
 import androidx.wear.watchface.WatchFace
@@ -14,7 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import android.util.Log
 
 private const val TAG = "WAetherWatchFaceService"
 

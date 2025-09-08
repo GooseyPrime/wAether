@@ -2,26 +2,24 @@ package com.wAether.data.firebase
 
 import android.content.Context
 import android.os.Build
-import android.provider.Settings // For deviceModel, osVersion (conceptual, might need more robust solution)
 // import com.google.firebase.firestore.FirebaseFirestore // Uncomment when Firebase SDK is added
 // import com.google.firebase.firestore.SetOptions // Uncomment for merging data
-import kotlinx.coroutines.tasks.await // For cleaner async operations with Firebase Tasks
 
 // Data class representing the structure of a snapshot to be logged to Firebase
 // This matches the sample entry provided in the specifications.
 data class SnapshotData(
-    val timestamp: Long,                   // UTC milliseconds
-    val timezoneOffset: Int,               // Hours from UTC
+    val timestamp: Long, // UTC milliseconds
+    val timezoneOffset: Int, // Hours from UTC
     val latitude: Double?,
     val longitude: Double?,
-    val magneticField: Float?,             // µT
+    val magneticField: Float?, // µT
     val kpIndex: Int?,
-    val irradiance: Float?,                // W/m²
+    val irradiance: Float?, // W/m²
     val xrayClass: String?,
     val deviceModel: String,
     val osVersion: String,
-    val batteryLevel: Int?,                // Percentage
-    val mood: String? = null               // Null for global_snapshots, present for mood_logs
+    val batteryLevel: Int?, // Percentage
+    val mood: String? = null // Null for global_snapshots, present for mood_logs
 )
 
 class FirebaseUploader(private val context: Context) {

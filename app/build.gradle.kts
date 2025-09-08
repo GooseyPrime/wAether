@@ -2,19 +2,19 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services") // Google services plugin for Firebase
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9" // Or your current KSP version
+    id("com.google.devtools.ksp") version "1.9.22-1.0.17" // Updated KSP version
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1" // Kotlin linter
     id("org.owasp.dependencycheck") version "8.4.2" // OWASP dependency check
 }
 
 android {
     namespace = "com.wAether"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.wAether"
         minSdk = 30
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         vectorDrawables {
@@ -50,7 +50,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11" // Ensure compatibility
+        kotlinCompilerExtensionVersion = "1.5.8" // Updated for Kotlin 1.9.22
     }
     packaging {
         resources {
@@ -79,7 +79,6 @@ dependencies {
     implementation("androidx.wear.compose:compose-material:$wearComposeVersion")
     implementation("androidx.wear.compose:compose-foundation:$wearComposeVersion")
     implementation("androidx.wear.compose:compose-navigation:$wearComposeVersion")
-    implementation("androidx.wear.compose:compose-tooling:$wearComposeVersion")
     debugImplementation("androidx.compose.ui:ui-tooling:1.6.7")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.7")
     implementation("androidx.compose.ui:ui-tooling-preview:1.6.7")
@@ -139,7 +138,7 @@ configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
     ignoreFailures.set(false)
     enableExperimentalRules.set(true)
     baseline.set(file("ktlint-baseline.xml"))
-    
+
     filter {
         exclude("**/generated/**")
         include("**/kotlin/**")
@@ -148,12 +147,10 @@ configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
 
 // OWASP Dependency Check configuration
 dependencyCheck {
-    analyzers {
-        assemblyEnabled = false
-        nuspecEnabled = false
-        nugetconfEnabled = false
-    }
-    
+    analyzers.assemblyEnabled = false
+    analyzers.nuspecEnabled = false
+    analyzers.nugetconfEnabled = false
+
     format = "ALL"
     outputDirectory = "build/reports"
     scanConfigurations = listOf("releaseRuntimeClasspath")

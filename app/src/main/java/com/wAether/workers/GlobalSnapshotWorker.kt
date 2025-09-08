@@ -47,7 +47,7 @@ class GlobalSnapshotWorker(
                 } else {
                     Log.e(TAG, "Failed to save global snapshot to Firebase: ${saveResult.exceptionOrNull()?.message}")
                     if (runAttemptCount < 3) { // Retry for Firebase save failures too
-                         Result.retry()
+                        Result.retry()
                     } else {
                         Result.failure()
                     }

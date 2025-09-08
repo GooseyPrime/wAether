@@ -71,37 +71,20 @@ jobs:
         
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1
+      uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: ${{ github.ref_name }}
+        name: Release ${{ github.ref_name }}
         draft: false
         prerelease: false
         body: |
           Changes in this Release
           - First release of wAether Android app
-          
-    - name: Upload Release APK
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ steps.sign_app.outputs.signedReleaseFile }}
-        asset_name: wAether-${{ github.ref_name }}.apk
-        asset_content_type: application/vnd.android.package-archive
-        
-    - name: Upload Release AAB
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
-        asset_name: wAether-${{ github.ref_name }}.aab
-        asset_content_type: application/octet-stream
+        files: |
+          ${{ steps.sign_app.outputs.signedReleaseFile }}
+          ${{ steps.sign_aab.outputs.signedReleaseFile }}
         
     - name: Publish to Play Store (Optional)
       # Uncomment and configure when ready for Play Store deployment

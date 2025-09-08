@@ -27,10 +27,7 @@ val moodList = listOf(
 )
 
 @Composable
-fun MoodSelectorScreen(
-    onMoodSelected: (String) -> Unit,
-    onCancel: () -> Unit
-) {
+fun MoodSelectorScreen(onMoodSelected: (String) -> Unit, onCancel: () -> Unit) {
     // ScalingLazyColumn is often preferred for Wear OS lists as it provides a fisheye effect
     // making items at the center larger and easier to tap.
     // However, for simplicity and to show a basic list, LazyColumn is used here.

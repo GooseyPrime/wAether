@@ -1,6 +1,5 @@
 package com.wAether.data.model
 
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.PropertyName
 
 /**

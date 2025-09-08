@@ -24,7 +24,6 @@ data class OpenMeteoResponse(
     @SerializedName("current") // Renamed from current_weather for clarity
     val current: OpenMeteoCurrentData?,
 
-
     @SerializedName("hourly_units")
     val hourlyUnits: OpenMeteoHourlyUnits?,
     val hourly: OpenMeteoHourlyData?,
@@ -107,7 +106,6 @@ data class OpenMeteoCurrentData(
 )
 // End New Current Weather Models
 
-
 data class OpenMeteoHourlyUnits(
     val time: String?,
     @SerializedName("shortwave_radiation")
@@ -140,7 +138,6 @@ data class OpenMeteoDailyData(
     val moonPhase: List<Double?>?
 )
 
-
 // --- NOAA SWPC (Space Weather Prediction Center) API Response Models ---
 // ... (No changes to NOAA models for this feature) ...
 data class NoaaKpIndexEntry(
@@ -160,7 +157,7 @@ data class GoesXrayFluxEntry(
     @SerializedName("flux")
     val flux: Double?,
     @SerializedName("energy")
-    val energyBand: String?,
+    val energyBand: String?
 )
 
 data class NoaaSolarWindEntry(

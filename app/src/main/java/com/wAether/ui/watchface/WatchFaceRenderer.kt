@@ -3,51 +3,33 @@ package com.wAether.ui.watchface
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Rect
 import android.graphics.Typeface
 import android.text.TextPaint
 import android.view.SurfaceHolder
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.watchface.ComplicationSlotsManager
+import androidx.wear.watchface.CompositingRenderer
 import androidx.wear.watchface.TapEvent
 import androidx.wear.watchface.WatchFace
 import androidx.wear.watchface.WatchState
-import androidx.wear.watchface.CompositingRenderer
 import androidx.wear.watchface.style.CurrentUserStyleRepository
-import com.wAether.R // For string resources
 import com.wAether.ui.theme.WAetherTheme // Assuming you have a Compose theme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.math.cos
-import kotlin.math.min
-import kotlin.math.sin
 
 private const val TAG = "WatchFaceRenderer"
 
@@ -69,7 +51,8 @@ class WatchFaceRenderer(
     canvasType,
     complicationSlotsManager,
     interactiveDrawModeUpdateDelayMillis = 16L // Aim for 60fps in interactive
-), WatchFace.TapListener {
+),
+    WatchFace.TapListener {
 
     // --- Paint objects for Canvas drawing (if mixing with Compose Canvas) ---
     // It's generally preferred to do as much as possible with Compose drawing primitives.
@@ -88,7 +71,6 @@ class WatchFaceRenderer(
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL)
     }
-
 
     // --- State for rendering, collected from ViewModel ---
     // These will be used by the @Composable RootApp function
@@ -110,7 +92,6 @@ class WatchFaceRenderer(
             watchFaceViewModel.fetchWatchData()
         }
     }
-
 
     override fun Mux.createRootComposables(currentUserStyleRepository: CurrentUserStyleRepository) {
         // Initialize State<T> delegates here, inside the Mux scope
@@ -179,7 +160,6 @@ class WatchFaceRenderer(
     // Optional: Override userStyleFlavors for predefined style combinations
     // override val userStyleFlavors: List<UserStyleFlavor> get() = ...
 }
-
 
 // --- Main Composable for the Watch Face UI ---
 @Composable
@@ -252,12 +232,18 @@ fun InteractiveDisplay(
     // For now, a simple placeholder showing the time and some data
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         TimeDisplay(currentTime = currentTime, isAmbient = isAmbient)
-        //Spacer(modifier = Modifier.height(8.dp))
+        // Spacer(modifier = Modifier.height(8.dp))
 
         if (!isAmbient) { // Show more details in interactive mode
-            Text(text = "Temp: ${localTemperature?.toInt() ?: "--"}°C, ${localWeatherCondition ?: "N/A"}", fontSize = 14.sp)
+            Text(
+                text = "Temp: ${localTemperature?.toInt() ?: "--"}°C, ${localWeatherCondition ?: "N/A"}",
+                fontSize = 14.sp
+            )
             Text(text = "Kp: ${kpIndex ?: "--"}, µT: ${magneticField?.toInt() ?: "--"}", fontSize = 14.sp)
-            Text(text = "Irrad: ${solarIrradiance?.toInt() ?: "--"} W/m², Moon: ${moonPhase?.let { "%.2f".format(it) } ?: "--"}", fontSize = 14.sp)
+            Text(
+                text = "Irrad: ${solarIrradiance?.toInt() ?: "--"} W/m², Moon: ${moonPhase?.let { "%.2f".format(it) } ?: "--"}",
+                fontSize = 14.sp
+            )
             Text(text = "X-Ray: ${xrayClass ?: "None"}", fontSize = 14.sp)
 
             // Placeholder for Mood - this needs to be an interactive element
@@ -292,7 +278,6 @@ fun ErrorDisplay(message: String, currentTime: Long) {
     }
 }
 
-
 // --- TODO: Implement individual Composable functions for each data point ---
 // Based on your "Visual Display Plan"
 
@@ -316,7 +301,6 @@ fun ErrorDisplay(message: String, currentTime: Long) {
 
 // @Composable
 // fun LocalWeatherDisplay(temperature: Double?, condition: String?, isAmbient: Boolean) { ... }
-
 
 // Helper for collecting StateFlows with lifecycle awareness in Composables
 // This is a common pattern if you don't have lifecycle-runtime-compose dependency
@@ -351,4 +335,3 @@ fun <T> StateFlow<T>.collectAsStateWithLifecycle(
     }
     return state
 }
-

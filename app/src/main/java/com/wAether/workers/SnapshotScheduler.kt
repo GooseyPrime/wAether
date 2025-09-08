@@ -78,7 +78,6 @@ object SnapshotScheduler {
         Log.i(TAG, "Re-enqueued periodic global snapshot work with new interval.")
     }
 
-
     fun cancelPeriodicGlobalSnapshots(context: Context) {
         WorkManager.getInstance(context).cancelUniqueWork(GLOBAL_SNAPSHOT_WORK_TAG)
         Log.i(TAG, "Cancelled periodic global snapshot work.")
@@ -89,7 +88,6 @@ object SnapshotScheduler {
         val workInfos = workManager.getWorkInfosByTagLiveData(GLOBAL_SNAPSHOT_WORK_TAG).value
         return workInfos?.any { !it.state.isFinished } ?: false
     }
-
 
     // TODO: Implement logic to detect Kp Index changes and call updateSnapshotInterval.
     // This might involve the WatchFaceViewModel observing Kp Index and notifying the scheduler,
