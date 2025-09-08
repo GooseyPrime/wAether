@@ -2,12 +2,14 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services") // Google services plugin for Firebase
-    id("com.google.devtools.ksp") version "1.9.10-1.0.13" // Or your current KSP version
+    id("com.google.devtools.ksp") version "1.8.10-1.0.9" // Or your current KSP version
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.1" // Kotlin linter
+    id("org.owasp.dependencycheck") version "8.4.2" // OWASP dependency check
 }
 
 android {
     namespace = "com.wAether"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.wAether"
@@ -125,4 +127,35 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.05.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+}
+
+// ktlint configuration
+configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+    debug.set(true)
+    verbose.set(true)
+    android.set(false)
+    outputToConsole.set(true)
+    outputColorName.set("RED")
+    ignoreFailures.set(false)
+    enableExperimentalRules.set(true)
+    baseline.set(file("ktlint-baseline.xml"))
+    
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
+}
+
+// OWASP Dependency Check configuration
+dependencyCheck {
+    analyzers {
+        assemblyEnabled = false
+        nuspecEnabled = false
+        nugetconfEnabled = false
+    }
+    
+    format = "ALL"
+    outputDirectory = "build/reports"
+    scanConfigurations = listOf("releaseRuntimeClasspath")
+    skipConfigurations = listOf("lintClassPath", "jacocoAgent", "jacocoAnt", "kotlinCompilerClasspath")
 }
