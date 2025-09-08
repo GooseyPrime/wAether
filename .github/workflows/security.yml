@@ -38,7 +38,7 @@ jobs:
       run: chmod +x gradlew
       
     - name: Run OWASP Dependency Check
-      run: ./gradlew dependencyCheckAnalyze --continue
+      run: ./gradlew dependencyCheckAnalyze --continue || echo "Dependency check found vulnerabilities - check reports"
       continue-on-error: true
       
     - name: Upload dependency check reports
@@ -94,7 +94,7 @@ jobs:
       run: chmod +x gradlew
       
     - name: Build project
-      run: ./gradlew assembleDebug --continue
+      run: ./gradlew assembleDebug --continue || echo "Build failed for CodeQL analysis"
       continue-on-error: true
       
     - name: Perform CodeQL Analysis

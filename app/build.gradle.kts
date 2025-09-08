@@ -154,5 +154,5 @@ dependencyCheck {
     format = "ALL"
     outputDirectory = "build/reports"
     scanConfigurations = listOf("releaseRuntimeClasspath")
-    skipConfigurations = listOf("lintClassPath", "jacocoAgent", "jacocoAnt", "kotlinCompilerClasspath")
+    // skipConfigurations = listOf("lintClassPath", "jacocoAgent", "jacocoAnt", "kotlinCompilerClasspath")
 }
