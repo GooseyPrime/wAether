@@ -1,0 +1,82 @@
+name: Documentation Issue
+description: Report an issue with documentation or suggest documentation improvements
+title: "[DOCS] "
+labels: ["documentation", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us improve wAether's documentation!
+        
+  - type: dropdown
+    id: documentation-type
+    attributes:
+      label: Type of documentation issue
+      description: What type of documentation issue is this?
+      options:
+        - Missing documentation
+        - Incorrect/outdated information
+        - Unclear/confusing content
+        - Typo/grammar error
+        - Documentation improvement suggestion
+        - New documentation request
+    validations:
+      required: true
+      
+  - type: input
+    id: affected-page
+    attributes:
+      label: Affected page/file
+      description: Which documentation page or file is affected?
+      placeholder: e.g., README.md, setup guide, API documentation
+    validations:
+      required: false
+      
+  - type: textarea
+    id: issue-description
+    attributes:
+      label: Description of the issue
+      description: A clear and concise description of the documentation issue.
+      placeholder: What's wrong with the current documentation?
+    validations:
+      required: true
+      
+  - type: textarea
+    id: suggested-improvement
+    attributes:
+      label: Suggested improvement
+      description: How would you improve this documentation?
+      placeholder: What should the documentation say instead?
+    validations:
+      required: false
+      
+  - type: dropdown
+    id: user-type
+    attributes:
+      label: User type
+      description: What type of user would benefit from this documentation improvement?
+      options:
+        - End user/consumer
+        - Developer/contributor
+        - System administrator
+        - All users
+    validations:
+      required: true
+      
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context about the documentation issue here.
+      placeholder: Any additional information that might help us improve the documentation
+    validations:
+      required: false
+      
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

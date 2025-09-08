@@ -1,0 +1,108 @@
+# GitHub Labels Configuration for wAether
+# This file documents the standard labels used for issue triage and management
+
+# Priority Labels
+- name: "priority/critical"
+  color: "d73a4a"
+  description: "Critical issues that need immediate attention"
+
+- name: "priority/high"
+  color: "e99695"
+  description: "High priority issues"
+
+- name: "priority/medium"
+  color: "fbca04"
+  description: "Medium priority issues"
+
+- name: "priority/low"
+  color: "0e8a16"
+  description: "Low priority issues"
+
+# Type Labels
+- name: "bug"
+  color: "d73a4a"
+  description: "Something isn't working"
+
+- name: "enhancement"
+  color: "a2eeef"
+  description: "New feature or request"
+
+- name: "documentation"
+  color: "0075ca"
+  description: "Improvements or additions to documentation"
+
+- name: "question"
+  color: "d876e3"
+  description: "Further information is requested"
+
+# Status Labels
+- name: "needs-triage"
+  color: "ededed"
+  description: "Issue needs to be triaged and labeled appropriately"
+
+- name: "needs-investigation"
+  color: "fef2c0"
+  description: "Issue needs further investigation before work can begin"
+
+- name: "ready-for-work"
+  color: "c2e0c6"
+  description: "Issue is ready to be worked on"
+
+- name: "in-progress"
+  color: "1d76db"
+  description: "Someone is actively working on this issue"
+
+- name: "blocked"
+  color: "b60205"
+  description: "Issue is blocked by other work or external dependencies"
+
+# Component Labels
+- name: "component/watch-face"
+  color: "5319e7"
+  description: "Related to watch face display and rendering"
+
+- name: "component/sensors"
+  color: "5319e7"  
+  description: "Related to sensor data collection (magnetometer, location, etc.)"
+
+- name: "component/data"
+  color: "5319e7"
+  description: "Related to data processing, APIs, or Firebase integration"
+
+- name: "component/ui"
+  color: "5319e7"
+  description: "Related to user interface and user experience"
+
+- name: "component/build"
+  color: "5319e7"
+  description: "Related to build system, dependencies, or CI/CD"
+
+# Platform Labels
+- name: "platform/wear-os"
+  color: "0e8a16"
+  description: "Specific to Wear OS platform"
+
+- name: "platform/android"
+  color: "0e8a16"
+  description: "General Android platform issues"
+
+# Special Labels
+- name: "good-first-issue"
+  color: "7057ff"
+  description: "Good for newcomers"
+
+- name: "help-wanted"
+  color: "008672"
+  description: "Extra attention is needed"
+
+- name: "duplicate"
+  color: "cfd3d7"
+  description: "This issue or pull request already exists"
+
+- name: "wontfix"
+  color: "ffffff"
+  description: "This will not be worked on"
+
+- name: "invalid"
+  color: "e4e669"
+  description: "This doesn't seem right"
